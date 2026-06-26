@@ -3,7 +3,7 @@ import Card from '@/components/Card/Card';
 
 const Main = () => {
   return (
-    <main>
+    <main className="px-4 md:px-6 lg:px-8">
       <div className="flex flex-row items-start gap-7 mt-5 mx-auto max-w-290 md:mt-10 lg:mt-15">
         <h1 className="text-black text-[32px] font-medium leading-[1.1] lg:text-6xl lg:leading-none">
           Начните заниматься спортом и улучшите качество жизни

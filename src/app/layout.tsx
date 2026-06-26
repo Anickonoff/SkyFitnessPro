@@ -20,7 +20,7 @@ export default function RootLayout({
   return (
     <html lang="ru" className={`${roboto.variable} h-full antialiased`}>
       <body className="min-h-full flex flex-col">
-        <div className="px-4 md:px-6 lg:px-8 md:bg-[#fafafa] pb-7.25 md:pb-20.25">
+        <div className="md:bg-[#fafafa] pb-7.25 md:pb-20.25">
           {children}
         </div>
       </body>
