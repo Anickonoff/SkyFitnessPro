@@ -21,7 +21,8 @@ const Button = ({
   const variants = {
     primary:
       'bg-accent hover:bg-btn-prim-hover active:bg-btn-prim-active active:text-white',
-    secondary: 'bg-white hover:bg-btn-sec-hover active:bg-btn-sec-active',
+    secondary:
+      'border bg-white hover:bg-btn-sec-hover active:bg-btn-sec-active',
   };
   return (
     <button

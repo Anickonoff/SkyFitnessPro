@@ -1,6 +1,12 @@
+import Button from '../Button/Button';
 import Label from '../Label/Label';
+import ProgressBar from '../ProgressBar/ProgressBat';
 
-const Card = () => {
+type CardProps = {
+  profile?: boolean;
+};
+
+const Card = ({ profile = false }: CardProps) => {
   return (
     <div className="w-full max-w-85.75 md:max-w-90 bg-white rounded-[30px] flex flex-col gap-6 pb-3.75 shadow-[0_4px_67px_-12px_rgba(0,0,0,0.13)]">
       <img
@@ -100,6 +106,15 @@ const Card = () => {
             <span>Сложность</span>
           </Label>
         </div>
+        {profile && (
+          <>
+            <div className="flex flex-col gap-2.5 mb-10">
+              <p>Прогресс 40%</p>
+              <ProgressBar progress={40} />
+            </div>
+            <Button>Начать тренировки</Button>
+          </>
+        )}
       </div>
     </div>
   );

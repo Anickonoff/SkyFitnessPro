@@ -15,6 +15,8 @@
   --color-btn-sec-active: #e9eced;
   --color-text-primary: #000000;
   --color-text-secondary: #202020;
+  --color-progress-bar: #00c1ff;
+  --color-progress-bg: #f7f7f7;
 }
 
 * {
