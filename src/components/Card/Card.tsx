@@ -1,6 +1,6 @@
 import Button from '../Button/Button';
 import Label from '../Label/Label';
-import ProgressBar from '../ProgressBar/ProgressBat';
+import ProgressBar from '../ProgressBar/ProgressBar';
 
 type CardProps = {
   profile?: boolean;
