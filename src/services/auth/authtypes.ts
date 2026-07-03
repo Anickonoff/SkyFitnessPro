@@ -22,6 +22,12 @@ export type UserInfoProps = {
 };
 
 export type UserInfoResponse = {
+  _id: string;
   email: string;
+  password: string;
   selectedCourses: string[];
+  courseProgress: string[];
+  createdAt: string;
+  updatedAt: string;
+  __v: number;
 };

@@ -16,13 +16,13 @@ export const register = async (
   return axios
     .post(`${BASE_URL}/auth/register`, props)
     .then((response) => response.data);
-};
+}; // успешно 201
 
 export const login = async (props: LoginProps): Promise<LoginResponse> => {
   return axios
     .post(`${BASE_URL}/auth/login`, props)
     .then((response) => response.data);
-};
+}; //успешно 200
 
 export const getUserInfo = async (
   props: UserInfoProps,
