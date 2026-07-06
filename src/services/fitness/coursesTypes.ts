@@ -1,4 +1,4 @@
-export type courseType = {
+export type CourseType = {
   _id: string;
   nameRu: string;
   nameEn: string;
@@ -13,7 +13,7 @@ export type courseType = {
   __v: number;
 };
 
-export type workoutType = {
+export type WorkoutType = {
   _id: string;
   name: string;
   video: string;

@@ -17,10 +17,6 @@ export type LoginResponse = {
   message?: string;
 };
 
-export type UserInfoProps = {
-  token: string;
-};
-
 export type UserInfoResponse = {
   _id: string;
   email: string;
