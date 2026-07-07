@@ -1,5 +1,5 @@
 type ProgressBarProps = {
-  progress: number;
+  progress: string;
 };
 
 const ProgressBar = ({ progress }: ProgressBarProps) => {

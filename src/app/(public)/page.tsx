@@ -1,5 +1,5 @@
 import Button from '@/components/Button/Button';
-import Card from '@/components/Card/Card';
+import CoursesList from '@/components/CoursesList/CoursesList';
 
 const Main = () => {
   return (
@@ -25,13 +25,7 @@ const Main = () => {
           </svg>
         </div>
       </div>
-      <div className="mt-8.5 max-w-290 mx-auto flex gap-6 md:gap-10 md:mt-12.5 flex-wrap justify-start">
-        <Card />
-        <Card />
-        <Card />
-        <Card />
-        <Card />
-      </div>
+      <CoursesList />
       <Button className="mt-6 ml-auto md:mt-8.5 md:mx-auto ">Наверх ↑</Button>
     </main>
   );

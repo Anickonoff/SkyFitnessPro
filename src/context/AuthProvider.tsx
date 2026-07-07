@@ -1,6 +1,6 @@
 'use client';
 
-import { ReactNode, useState } from 'react';
+import { ReactNode, useEffect, useState } from 'react';
 import { AuthContext } from './AuthContext';
 import { LoginProps } from '@/services/auth/authtypes';
 import authApi from '@/services/auth/authApi';
@@ -11,19 +11,28 @@ export type User = {
 };
 
 const AuthProvider = ({ children }: { children: ReactNode }) => {
-  const [user, setUser] = useState<User | null>(() => {
+  const [user, setUser] = useState<User | null>(null);
+  const [token, setToken] = useState<string | null>(null);
+  useEffect(() => {
     const raw = localStorage.getItem('user');
     if (raw) {
       try {
         return JSON.parse(raw);
       } catch {
         localStorage.removeItem('user');
-        return null;
       }
-    } else {
-      return null;
     }
-  });
+  }, []);
+  useEffect(() => {
+    const raw = localStorage.getItem('token');
+    if (raw) {
+      try {
+        return JSON.parse(raw);
+      } catch {
+        localStorage.removeItem('token');
+      }
+    }
+  }, []);
 
   const isAuthenticated = !!user;
 
@@ -35,6 +44,14 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
       localStorage.removeItem('user');
     }
   };
+  const updateToken = (token: string | null) => {
+    setToken(token);
+    if (token) {
+      localStorage.setItem('token', token);
+    } else {
+      localStorage.removeItem('token');
+    }
+  };
 
   const login = async (data: LoginProps): Promise<void> => {
     try {
@@ -43,7 +60,7 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
         throw new Error(response.message || 'Ошибка авторизации');
       }
 
-      localStorage.setItem('token', response.token);
+      updateToken(response.token);
 
       const user = await authApi.getUserInfo();
       const userData = {
@@ -59,11 +76,13 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   const logout = (): void => {
     updateUserData(null);
-    localStorage.removeItem('token');
+    updateToken(null);
   };
 
   return (
-    <AuthContext.Provider value={{ user, login, logout, isAuthenticated }}>
+    <AuthContext.Provider
+      value={{ user, token, login, logout, isAuthenticated }}
+    >
       {children}
     </AuthContext.Provider>
   );

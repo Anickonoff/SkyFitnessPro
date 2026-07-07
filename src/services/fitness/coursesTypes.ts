@@ -1,7 +1,7 @@
 export type CourseType = {
   _id: string;
-  nameRu: string;
-  nameEn: string;
+  nameRU: string;
+  nameEN: string;
   description: string;
   direction: string[];
   dailyDurationInMinutes: { from: number; to: number };

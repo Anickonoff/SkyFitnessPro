@@ -1,22 +1,47 @@
+import { courseCovers } from '@/constants/courseCovers';
 import Button from '../Button/Button';
 import Label from '../Label/Label';
 import ProgressBar from '../ProgressBar/ProgressBar';
+import { useRouter } from 'next/navigation';
 
 type CardProps = {
   profile?: boolean;
+  progress?: string;
+  id: string;
+  nameRU: string;
+  durationInDays: string;
+  dailyDurationInMinutes: { from: number; to: number };
+  order: number;
+  difficulty: string;
 };
 
-const Card = ({ profile = false }: CardProps) => {
+const Card = ({
+  profile = false,
+  progress = '0',
+  nameRU,
+  durationInDays,
+  dailyDurationInMinutes,
+  difficulty,
+  order,
+  id,
+}: CardProps) => {
+  const router = useRouter();
+  const handleClickCourse = (id: string) => {
+    router.push(`/courses/${id}/`);
+  };
   return (
-    <div className="w-full max-w-85.75 md:max-w-90 bg-white rounded-[30px] flex flex-col gap-6 pb-3.75 shadow-[0_4px_67px_-12px_rgba(0,0,0,0.13)]">
+    <div
+      className="w-full max-w-85.75 md:max-w-90 bg-white rounded-[30px] flex flex-col gap-6 pb-3.75 shadow-[0_4px_67px_-12px_rgba(0,0,0,0.13)] cursor-pointer"
+      onClick={() => handleClickCourse(id)}
+    >
       <img
-        src="/images/yoga-card.png"
+        src={`/images/${courseCovers[order]}-card.png`}
         alt="Card Image"
         className="w-full h-auto rounded-[30px]"
       />
       <div className="px-5.25 md:px-7.5 flex flex-col gap-5">
         <h2 className="text-black text-[32px] font-medium leading-[1.1]">
-          Йога
+          {nameRU}
         </h2>
         <div className="flex flex-row flex-wrap gap-1.5">
           <Label>
@@ -38,7 +63,7 @@ const Card = ({ profile = false }: CardProps) => {
                 fill="#202020"
               />
             </svg>
-            <span>25 дней</span>
+            <span>{durationInDays} дней</span>
           </Label>
           <Label>
             <svg
@@ -55,7 +80,10 @@ const Card = ({ profile = false }: CardProps) => {
                 fill="#202020"
               />
             </svg>
-            <span>20-50 мин/день</span>
+            <span>
+              {dailyDurationInMinutes.from} - {dailyDurationInMinutes.to}{' '}
+              мин/день
+            </span>
           </Label>
           <Label>
             <svg
@@ -103,14 +131,14 @@ const Card = ({ profile = false }: CardProps) => {
                 </clipPath>
               </defs>
             </svg>
-            <span>Сложность</span>
+            <span>{difficulty}</span>
           </Label>
         </div>
         {profile && (
           <>
             <div className="flex flex-col gap-2.5 mb-10">
-              <p>Прогресс 40%</p>
-              <ProgressBar progress={40} />
+              <p>Прогресс {progress}%</p>
+              <ProgressBar progress={progress} />
             </div>
             <Button>Начать тренировки</Button>
           </>

@@ -7,6 +7,7 @@ type AuthContextType = {
   isAuthenticated: boolean;
   login: (data: LoginProps) => Promise<void>;
   logout: () => void;
+  token: string | null;
 };
 
 export const AuthContext = createContext<AuthContextType | null>(null);
