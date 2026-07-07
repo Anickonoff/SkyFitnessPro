@@ -3,7 +3,7 @@ export type CourseType = {
   nameRU: string;
   nameEN: string;
   description: string;
-  direction: string[];
+  directions: string[];
   dailyDurationInMinutes: { from: number; to: number };
   fitting: string[];
   order: number;
