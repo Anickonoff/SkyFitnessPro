@@ -11,10 +11,12 @@
   --color-btn-sec-hover: #f7f7f7;
   --color-btn-prim-inactive: #f7f7f7;
   --color-btn-sec-inactive: #ffffff;
+  --color-btn-sec-border-inactive: #999999;
   --color-btn-prim-active: #000000;
   --color-btn-sec-active: #e9eced;
   --color-text-primary: #000000;
   --color-text-secondary: #202020;
+  --color-text-inactive: #999999;
   --color-progress-bar: #00c1ff;
   --color-progress-bg: #f7f7f7;
 }

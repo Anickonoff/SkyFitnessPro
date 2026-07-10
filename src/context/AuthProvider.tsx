@@ -59,13 +59,14 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
       if (!response.token) {
         throw new Error(response.message || 'Ошибка авторизации');
       }
-
+      console.log(response.token);
       updateToken(response.token);
 
       const user = await authApi.getUserInfo();
+      console.log(user);
       const userData = {
-        name: user.email.split('@')[0],
-        email: user.email,
+        name: user.user.email.split('@')[0],
+        email: user.user.email,
       };
       updateUserData(userData);
     } catch (error) {
