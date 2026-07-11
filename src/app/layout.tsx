@@ -3,6 +3,7 @@ import { Roboto } from 'next/font/google';
 import './globals.css';
 import AuthProvider from '@/context/AuthProvider';
 import CoursesProvider from '@/context/CoursesProvider';
+import AuthModalProvider from '@/context/AuthModalProvider';
 
 const roboto = Roboto({
   variable: '--font-roboto',
@@ -24,7 +25,9 @@ export default function RootLayout({
       <body className="min-h-full flex flex-col">
         <div className="md:bg-[#fafafa] pb-7.25 md:pb-20.25">
           <AuthProvider>
-            <CoursesProvider>{children}</CoursesProvider>
+            <AuthModalProvider>
+              <CoursesProvider>{children}</CoursesProvider>
+            </AuthModalProvider>
           </AuthProvider>
         </div>
       </body>

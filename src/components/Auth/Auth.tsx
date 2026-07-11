@@ -2,13 +2,11 @@ import { ChangeEvent, useState } from 'react';
 import Button from '../Button/Button';
 import { useAuth } from '@/hooks/useAuth';
 import authApi from '@/services/auth/authApi';
+import { useAuthModal } from '@/hooks/useAuthModal';
 
-type AuthProps = {
-  closeform: () => void;
-};
-
-const Auth = ({ closeform }: AuthProps) => {
+const Auth = () => {
   const { login } = useAuth();
+  const { closeAuthModal } = useAuthModal();
   const [error, setError] = useState<string>('');
   const [infoMsg, setInfoMsg] = useState<string>('');
   const [authMode, setAuthMode] = useState<'login' | 'register'>('login');
@@ -111,13 +109,12 @@ const Auth = ({ closeform }: AuthProps) => {
     });
   };
 
-  //TODO отправка запроса и обработка ошибок
   const handleSubmit = async () => {
     if (!validateForm()) return;
     try {
       if (authMode === 'login') {
         await login({ email: formData.email, password: formData.password });
-        closeform();
+        closeAuthModal();
       } else {
         await authApi.register({
           email: formData.email,

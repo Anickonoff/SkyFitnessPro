@@ -1,7 +1,7 @@
 'use client';
 
 import { getAllCourses } from '@/services/fitness/coursesApi';
-import { CourseType } from '@/services/fitness/coursesTypes';
+import { CourseType } from '@/types/coursesTypes';
 import { ReactNode, useEffect, useState } from 'react';
 import { CoursesContext } from './CoursesContext';
 

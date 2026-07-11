@@ -2,15 +2,19 @@
 
 import Button from '@/components/Button/Button';
 import { courseBgs, courseCovers } from '@/constants/courseCovers';
+import { useAuth } from '@/hooks/useAuth';
+import { useAuthModal } from '@/hooks/useAuthModal';
 import { useCourses } from '@/hooks/useCourses';
-import { CourseType } from '@/services/fitness/coursesTypes';
+import { CourseType } from '@/types/coursesTypes';
 import { useParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
 const coursePage = () => {
   const id = useParams<{ id: string }>();
   const { isCoursesLoading, getCourseById } = useCourses();
+  const { isAuthenticated } = useAuth();
   const [course, setCourse] = useState<CourseType | undefined>(undefined);
+  const { openAuthModal } = useAuthModal();
   useEffect(() => {
     if (!isCoursesLoading) {
       const courseById = getCourseById(id.id);
@@ -80,14 +84,6 @@ const coursePage = () => {
       )}
       <div className="relative -mt-25 lg:mt-25.5 mb-8 lg:mb-12 w-full">
         <div className="block relative lg:hidden w-full  h-84 md:h-70">
-          {/* <img
-            src="/images/new-way-line.svg"
-            className="absolute top-14 -right-15 h-82.5 sm:h-112.5 md:h-125 z-10 max-w-none"
-          />
-          <img
-            className="h-84 sm:h-112.5 md:h-125 absolute top-4 -right-12"
-            src="/images/new-way.png"
-          /> */}
           <img
             className="w-93.75 absolute right-0 top-0"
             src="/images/new-way_mobile.png"
@@ -106,8 +102,13 @@ const coursePage = () => {
                 <li className="pb-1">упражнения заряжают бодростью</li>
                 <li className="pb-1">помогают противостоять стрессам</li>
               </ul>
-              <Button className="text-base! md:text-lg">
-                Войдите, чтобы добавить курс
+              <Button
+                className="text-base! md:text-lg"
+                onClick={isAuthenticated ? openAuthModal : openAuthModal}
+              >
+                {isAuthenticated
+                  ? 'Добавить курс'
+                  : 'Войдите, чтобы добавить курс'}
               </Button>
             </div>
 

@@ -1,5 +1,5 @@
 import api from '../apiClient';
-import { CourseType, WorkoutType } from './coursesTypes';
+import { CourseType, WorkoutType } from '../../types/coursesTypes';
 
 export const getAllCourses = async (): Promise<CourseType[]> => {
   return api.get('/courses').then((response) => response.data);
@@ -17,4 +17,22 @@ export const getAllWorkoutsByCourseId = async (
 
 export const getWorkoutById = async (id: string): Promise<WorkoutType> => {
   return api.get(`/workouts/${id}`).then((response) => response.data);
+};
+
+export const addCourseToUser = async (courseId: string): Promise<void> => {
+  return api
+    .post(`/users/me/courses`, { courseId })
+    .then((response) => response.data);
+};
+
+export const removeCourseFromUser = async (courseId: string): Promise<void> => {
+  return api
+    .delete(`/users/me/courses/${courseId}`)
+    .then((response) => response.data);
+};
+
+export const resetCourseProgress = async (courseId: string): Promise<void> => {
+  return api
+    .patch(`/users/me/courses/${courseId}/reset`)
+    .then((response) => response.data);
 };

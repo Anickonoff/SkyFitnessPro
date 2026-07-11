@@ -1,7 +1,24 @@
+'use client';
+
 import Button from '@/components/Button/Button';
 import Card from '@/components/Card/Card';
+import { useAuth } from '@/hooks/useAuth';
+import { useCourses } from '@/hooks/useCourses';
+import { CourseType } from '@/types/coursesTypes';
+import { useEffect, useState } from 'react';
 
 const Main = () => {
+  const { user } = useAuth();
+  const { courses } = useCourses();
+  const [addedCourses, setAddedCourses] = useState<CourseType[] | null>(null);
+  useEffect(() => {
+    if (user?.selectedCourses && courses) {
+      setAddedCourses(
+        courses.filter((course) => user.selectedCourses.includes(course._id)),
+      );
+    }
+  }, [user?.selectedCourses, courses]);
+
   return (
     <main className="px-4 md:px-6 lg:px-8">
       <div className="flex flex-col items-start gap-6 mt-10 mx-auto max-w-290 lg:mt-15 lg:gap-10">
@@ -16,10 +33,10 @@ const Main = () => {
           />
           <div className="flex flex-col gap-5 md:gap-7.5">
             <h2 className="text-black text-[24px] font-medium leading-[1.1] md:text-[32px] ">
-              Сергей
+              {user?.name}
             </h2>
             <p className="text-black text-[16px] font-normal leading-[1.1] md:mb-3.5 md:text-[18px]">
-              Логин: sergey.petrov96
+              Логин: {user?.email}
             </p>
             <Button variant="secondary" className="md:w-35">
               Выйти
@@ -30,9 +47,25 @@ const Main = () => {
           Мои курсы
         </h2>
         <div className="flex gap-6 md:gap-10 flex-wrap justify-start">
-          <Card profile={true} />
-          <Card profile={true} />
-          <Card profile={true} />
+          {!addedCourses || addedCourses.length === 0 ? (
+            <p>У Вас нет добавленных курсов</p>
+          ) : (
+            addedCourses
+              .sort((a, b) => a.order - b.order)
+              .map((course) => (
+                <Card
+                  key={course._id}
+                  nameRU={course.nameRU}
+                  durationInDays={course.durationInDays.toString()}
+                  difficulty={course.difficulty}
+                  dailyDurationInMinutes={course.dailyDurationInMinutes}
+                  order={course.order}
+                  id={course._id}
+                  profile={true}
+                  courseActionState="added"
+                />
+              ))
+          )}
         </div>
         <Button className="ml-auto md:hidden">Наверх ↑</Button>
       </div>

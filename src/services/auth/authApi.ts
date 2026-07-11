@@ -5,7 +5,7 @@ import {
   RegisterProps,
   RegisterResponse,
   UserInfoResponse,
-} from './authtypes';
+} from '../../types/authtypes';
 
 const register = async (data: RegisterProps): Promise<RegisterResponse> => {
   const response = await api.post('/auth/register', data);

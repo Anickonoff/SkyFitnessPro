@@ -1,10 +1,19 @@
 'use client';
 
+import { useAuth } from '@/hooks/useAuth';
 import Card from '../Card/Card';
 import { useCourses } from '@/hooks/useCourses';
+import { СourseActionStateType } from '@/types/otherTypes';
 
 const CoursesList = () => {
   const { courses, isCoursesLoading } = useCourses();
+  const { user } = useAuth();
+  const defineCourseActionState = (id: string): СourseActionStateType =>
+    !user
+      ? 'unauthorized'
+      : user.selectedCourses.includes(id)
+        ? 'added'
+        : 'notAdded';
 
   return (
     <div className="mt-8.5 max-w-290 mx-auto flex gap-6 md:gap-10 md:mt-12.5 flex-wrap justify-start">
@@ -22,6 +31,7 @@ const CoursesList = () => {
               dailyDurationInMinutes={course.dailyDurationInMinutes}
               order={course.order}
               id={course._id}
+              courseActionState={defineCourseActionState(course._id)}
             />
           ))
       )}

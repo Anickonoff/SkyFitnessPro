@@ -15,7 +15,8 @@ const Button = ({
   className,
   disabled = false,
 }: ButtonProps) => {
-  const baseClasses = 'block rounded-full text-lg text-black leading-[1.1] ';
+  const baseClasses =
+    'block rounded-full text-lg text-black leading-[1.1] cursor-pointer';
   const sizes = {
     default: 'px-6.5 py-4',
     small: 'px-4 py-2 md:px-6.5 md:py-4',

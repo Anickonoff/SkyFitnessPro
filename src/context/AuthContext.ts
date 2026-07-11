@@ -1,4 +1,4 @@
-import { LoginProps } from '@/services/auth/authtypes';
+import { LoginProps } from '@/types/authtypes';
 import { createContext } from 'react';
 import { User } from './AuthProvider';
 
@@ -8,6 +8,7 @@ type AuthContextType = {
   login: (data: LoginProps) => Promise<void>;
   logout: () => void;
   token: string | null;
+  refreshUserData: () => Promise<void>;
 };
 
 export const AuthContext = createContext<AuthContextType | null>(null);

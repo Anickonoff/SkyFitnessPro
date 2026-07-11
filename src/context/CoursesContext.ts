@@ -1,7 +1,7 @@
 'use client';
 
 import { createContext } from 'react';
-import { CourseType } from '@/services/fitness/coursesTypes';
+import { CourseType } from '@/types/coursesTypes';
 
 type CoursesContextType = {
   isCoursesLoading: boolean;

@@ -14,7 +14,7 @@ const ModalWrapper = ({ children, ...props }: ModalWrapperProps) => {
 
   return (
     <div
-      className="absolute p-4 w-screen h-screen bg-black/20 z-10 flex justify-center items-center left-0 top-0"
+      className="fixed inset-0 p-4 bg-black/20 z-50 flex justify-center items-center"
       {...props}
     >
       {children}
