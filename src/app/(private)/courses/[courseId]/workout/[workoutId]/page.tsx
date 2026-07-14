@@ -1,7 +1,14 @@
+'useClient';
+
 import Button from '@/components/Button/Button';
-import Execute from '@/components/Workout/Execute';
+import Execute from '@/components/Execute/Execute';
+import { useParams } from 'next/navigation';
 
 const Workout = () => {
+  const { courseId, workoutId } = useParams<{
+    courseId: string;
+    workoutId: string;
+  }>();
   return (
     <main className="flex flex-col gap-6 mt-10 lg:mt-15 lg:gap-10 max-w-290 mx-auto px-4 md:px-6 lg:px-8 xl:px-0">
       <h1 className="text-2xl font-medium leading-[1.1] lg:text-[60px] lg:leading-none">

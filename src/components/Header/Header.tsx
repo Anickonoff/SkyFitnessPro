@@ -41,7 +41,10 @@ const Header = ({ privatePage = false }: HeaderPropsType) => {
         )}
       </div>
       {isAuthenticated ? (
-        <div className="flex flex-row items-center relative">
+        <div
+          className="flex flex-row items-center relative"
+          onClick={() => handleProfileClick()}
+        >
           <img
             src="/images/header-photo.png"
             className="h-9 md:h-12.5 mr-2.5 md:mr-4"
@@ -50,7 +53,6 @@ const Header = ({ privatePage = false }: HeaderPropsType) => {
             {user?.name}
           </div>
           <svg
-            onClick={() => handleProfileClick()}
             xmlns="http://www.w3.org/2000/svg"
             width="10"
             height="7"

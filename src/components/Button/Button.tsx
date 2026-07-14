@@ -1,6 +1,6 @@
 type ButtonProps = {
   children: React.ReactNode;
-  onClick?: () => void;
+  onClick?: () => void | Promise<void>;
   variant?: 'primary' | 'secondary';
   size?: 'default' | 'small';
   className?: string;

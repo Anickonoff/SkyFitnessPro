@@ -2,13 +2,13 @@
 
 import { ReactNode, useEffect, useState } from 'react';
 import { AuthContext } from './AuthContext';
-import { LoginProps } from '@/types/authtypes';
+import { CourseProgress, LoginProps } from '@/types/authtypes';
 import authApi from '@/services/auth/authApi';
 
 export type User = {
   name: string;
   email: string;
-  courseProgress: string[];
+  courseProgress: CourseProgress[];
   selectedCourses: string[];
 };
 

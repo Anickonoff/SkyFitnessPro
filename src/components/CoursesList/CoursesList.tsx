@@ -25,6 +25,7 @@ const CoursesList = () => {
           .map((course) => (
             <Card
               key={course._id}
+              variant="catalog"
               nameRU={course.nameRU}
               durationInDays={course.durationInDays.toString()}
               difficulty={course.difficulty}

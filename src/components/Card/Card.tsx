@@ -10,9 +10,7 @@ import {
 } from '@/services/fitness/coursesApi';
 import { useAuth } from '@/hooks/useAuth';
 
-type CardProps = {
-  profile?: boolean;
-  progress?: string;
+type BaseCardProps = {
   id: string;
   nameRU: string;
   durationInDays: string;
@@ -22,17 +20,32 @@ type CardProps = {
   courseActionState: СourseActionStateType;
 };
 
-const Card = ({
-  profile = false,
-  progress = '0',
-  nameRU,
-  durationInDays,
-  dailyDurationInMinutes,
-  difficulty,
-  order,
-  id,
-  courseActionState = 'unauthorized',
-}: CardProps) => {
+type CardProps =
+  | (BaseCardProps & {
+      variant: 'profile';
+      progress: number;
+      courseButton: () => void | Promise<void>;
+    })
+  | (BaseCardProps & {
+      variant: 'catalog';
+    });
+
+const Card = (props: CardProps) => {
+  const {
+    variant = 'catalog',
+    nameRU,
+    durationInDays,
+    dailyDurationInMinutes,
+    difficulty,
+    order,
+    id,
+    courseActionState = 'unauthorized',
+  } = props;
+
+  // if (profile) {
+  //   const { progress, courseButton } = props;
+  //   // здесь они гарантированно существуют
+  // }
   const { refreshUserData } = useAuth();
 
   const tooltipText =
@@ -53,6 +66,29 @@ const Card = ({
     }
     await refreshUserData();
     return;
+  };
+
+  const renderProfileSection = () => {
+    if (props.variant !== 'profile') {
+      return null;
+    }
+
+    return (
+      <>
+        <div className="flex flex-col gap-2.5 mb-10">
+          <p>Прогресс {props.progress}%</p>
+          <ProgressBar progress={props.progress} />
+        </div>
+
+        <Button onClick={props.courseButton}>
+          {props.progress === 100
+            ? 'Начать заново'
+            : props.progress === 0
+              ? 'Начать тренировки'
+              : 'Продолжить тренировки'}
+        </Button>
+      </>
+    );
   };
 
   return (
@@ -161,15 +197,7 @@ const Card = ({
               <span>{difficulty}</span>
             </Label>
           </div>
-          {profile && (
-            <>
-              <div className="flex flex-col gap-2.5 mb-10">
-                <p>Прогресс {progress}%</p>
-                <ProgressBar progress={progress} />
-              </div>
-              <Button>Начать тренировки</Button>
-            </>
-          )}
+          {renderProfileSection()}
         </div>
       </Link>
       <button

@@ -5,22 +5,48 @@ import { courseBgs, courseCovers } from '@/constants/courseCovers';
 import { useAuth } from '@/hooks/useAuth';
 import { useAuthModal } from '@/hooks/useAuthModal';
 import { useCourses } from '@/hooks/useCourses';
+import { addCourseToUser } from '@/services/fitness/coursesApi';
 import { CourseType } from '@/types/coursesTypes';
-import { useParams } from 'next/navigation';
+import { useParams, useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
 const coursePage = () => {
-  const id = useParams<{ id: string }>();
+  const { courseId } = useParams<{ courseId: string }>();
   const { isCoursesLoading, getCourseById } = useCourses();
-  const { isAuthenticated } = useAuth();
+  const { isAuthenticated, user } = useAuth();
   const [course, setCourse] = useState<CourseType | undefined>(undefined);
   const { openAuthModal } = useAuthModal();
   useEffect(() => {
     if (!isCoursesLoading) {
-      const courseById = getCourseById(id.id);
+      const courseById = getCourseById(courseId);
       setCourse(courseById);
     }
-  }, [isCoursesLoading, id.id, getCourseById]);
+  }, [isCoursesLoading, courseId, getCourseById]);
+  const router = useRouter();
+
+  const handleClick = () => {
+    if (user) {
+      if (user.selectedCourses.includes(courseId)) {
+        router.push('/profile');
+      } else {
+        addCourseToUser(courseId);
+      }
+    } else {
+      openAuthModal();
+    }
+  };
+
+  const textButton = (): string => {
+    if (user) {
+      if (user.selectedCourses.includes(courseId)) {
+        return 'Курс добавлен, перейти в профиль';
+      } else {
+        return 'Добавить курс';
+      }
+    } else {
+      return 'Войдите, чтобы добавить курс';
+    }
+  };
 
   return (
     <main>
@@ -102,13 +128,8 @@ const coursePage = () => {
                 <li className="pb-1">упражнения заряжают бодростью</li>
                 <li className="pb-1">помогают противостоять стрессам</li>
               </ul>
-              <Button
-                className="text-base! md:text-lg"
-                onClick={isAuthenticated ? openAuthModal : openAuthModal}
-              >
-                {isAuthenticated
-                  ? 'Добавить курс'
-                  : 'Войдите, чтобы добавить курс'}
+              <Button className="text-base! md:text-lg" onClick={handleClick}>
+                {textButton()}
               </Button>
             </div>
 

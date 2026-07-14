@@ -23,9 +23,23 @@ export type UserInfoResponse = {
     email: string;
     password: string;
     selectedCourses: string[];
-    courseProgress: string[];
+    courseProgress: CourseProgress[];
     createdAt: string;
     updatedAt: string;
     __v: number;
   };
+};
+
+export type WorkoutProgress = {
+  _id: string;
+  workoutId: string;
+  workoutCompleted: boolean;
+  progressData: number[];
+};
+
+export type CourseProgress = {
+  _id: string;
+  courseId: string;
+  courseCompleted: boolean;
+  workoutsProgress: WorkoutProgress[];
 };

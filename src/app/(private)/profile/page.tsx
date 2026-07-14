@@ -4,6 +4,7 @@ import Button from '@/components/Button/Button';
 import Card from '@/components/Card/Card';
 import { useAuth } from '@/hooks/useAuth';
 import { useCourses } from '@/hooks/useCourses';
+import { resetCourseProgress } from '@/services/fitness/coursesApi';
 import { CourseType } from '@/types/coursesTypes';
 import { useEffect, useState } from 'react';
 
@@ -18,6 +19,36 @@ const Main = () => {
       );
     }
   }, [user?.selectedCourses, courses]);
+
+  const calcProgress = (courseId: string): number => {
+    if (!courses || !user) return 0;
+    const numberOfWorkouts = courses.find((course) => course._id === courseId)
+      ?.workouts.length;
+    if (!numberOfWorkouts) return 0;
+    const courseProgress = user.courseProgress.find(
+      (course) => course.courseId === courseId,
+    );
+    if (!courseProgress) return 0;
+    if (courseProgress.courseCompleted) return 100;
+    const workoutsProgress = courseProgress.workoutsProgress;
+    const completedWorkouts = workoutsProgress.filter(
+      (workout) => workout.workoutCompleted,
+    ).length;
+    const progress = Math.round((completedWorkouts / numberOfWorkouts) * 100);
+    return progress;
+  };
+
+  const handleCourseSelect = async (courseId: string) => {
+    const progress = calcProgress(courseId);
+    if (progress < 100) {
+      //открыть модальное окно с выбором урока
+      return;
+    } else {
+      const responce = await resetCourseProgress(courseId);
+      //сбросить прогресс
+      console.log(responce);
+    }
+  };
 
   return (
     <main className="px-4 md:px-6 lg:px-8">
@@ -55,14 +86,16 @@ const Main = () => {
               .map((course) => (
                 <Card
                   key={course._id}
+                  variant="profile"
                   nameRU={course.nameRU}
                   durationInDays={course.durationInDays.toString()}
                   difficulty={course.difficulty}
                   dailyDurationInMinutes={course.dailyDurationInMinutes}
                   order={course.order}
                   id={course._id}
-                  profile={true}
                   courseActionState="added"
+                  progress={calcProgress(course._id)}
+                  courseButton={() => handleCourseSelect(course._id)}
                 />
               ))
           )}

@@ -5,7 +5,7 @@ type ExecuteProps = {
   progress?: number;
 };
 
-const Execute = ({ title = 'Наклоны вперед', progress = 40 }) => {
+const Execute = ({ title = 'Наклоны вперед', progress = 40 }: ExecuteProps) => {
   return (
     <div className="flex flex-col gap-2.5">
       <p className="text-[18px] font-normal leading-[1.1]">
