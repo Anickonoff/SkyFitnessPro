@@ -42,7 +42,7 @@ const Header = ({ privatePage = false }: HeaderPropsType) => {
       </div>
       {isAuthenticated ? (
         <div
-          className="flex flex-row items-center relative"
+          className="flex flex-row items-center relative cursor-pointer"
           onClick={() => handleProfileClick()}
         >
           <img
