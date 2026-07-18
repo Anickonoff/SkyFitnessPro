@@ -2,21 +2,24 @@
 
 import Header from '@/components/Header/Header';
 import { useAuth } from '@/hooks/useAuth';
-import { useRouter } from 'next/navigation';
 import { ReactNode } from 'react';
-
 type AuthLayoutProps = {
   children: ReactNode;
 };
 
 const AuthLayout = ({ children }: AuthLayoutProps) => {
   const { isAuthenticated } = useAuth();
-  const router = useRouter();
-
   if (!isAuthenticated) {
-    router.push('/');
+    return (
+      <>
+        <Header privatePage={true} />
+        <div className="flex items-center justify-center h-screen">
+          <p>Для доступа к данной странице необходимо авторизоваться</p>
+        </div>
+      </>
+    );
   }
-  //TODO вместо перехода на главную страницу сделать уведомление о необходимости авторизации
+
   return (
     <>
       <Header privatePage={true} />

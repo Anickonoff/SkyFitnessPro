@@ -98,6 +98,7 @@ const WorkoutList = ({ courseId }: WorkoutListProps) => {
                   const parsedName = parseWorkoutName(workout.name);
                   return (
                     <Link
+                      key={workout._id}
                       className="flex flex-row gap-2.5 pb-2.5 border-b-[#C4c4c4] border-b items-center min-h-13.75 md:min-h-16 w-full"
                       href={`/courses/${courseId}/workout/${workout._id}`}
                     >
