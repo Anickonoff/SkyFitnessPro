@@ -11,7 +11,7 @@ import { CourseType } from '@/types/coursesTypes';
 import { useEffect, useState } from 'react';
 
 const Main = () => {
-  const { user } = useAuth();
+  const { user, refreshUserData } = useAuth();
   const { courses } = useCourses();
   const [addedCourses, setAddedCourses] = useState<CourseType[] | null>(null);
   const [shownWorkouts, setShownWorkouts] = useState<string | null>(null);
@@ -46,9 +46,8 @@ const Main = () => {
     if (progress < 100) {
       setShownWorkouts(courseId);
     } else {
-      const responce = await resetCourseProgress(courseId);
-      //сбросить прогресс
-      console.log(responce);
+      await resetCourseProgress(courseId);
+      await refreshUserData();
     }
   };
 

@@ -20,3 +20,11 @@ export type WorkoutType = {
   exercises: { name: string; quantity: number; _id: string }[];
   __v: number;
 };
+
+export type ExerciseProgressType = {
+  name: string;
+  current: number;
+  max: number;
+  percent: number;
+  id: string;
+};

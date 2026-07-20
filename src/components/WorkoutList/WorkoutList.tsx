@@ -26,7 +26,6 @@ const WorkoutList = ({ courseId }: WorkoutListProps) => {
         const newWorkouts = await getAllWorkoutsByCourseId(courseId);
         setWorkouts(orderWorkoutsByCourse(newWorkouts));
       } catch (error) {
-        console.log(error);
         if (error instanceof Error) {
           setError(error.message);
         } else {

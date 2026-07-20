@@ -7,7 +7,7 @@ const ProgressBar = ({ progress }: ProgressBarProps) => {
     <div className="w-full h-1.5 bg-progress-bg rounded-full">
       <div
         className="bg-progress-bar h-1.5 rounded-full"
-        style={{ width: `${progress}%` }}
+        style={{ width: `${progress > 100 ? 100 : progress}%` }}
       ></div>
     </div>
   );

@@ -33,6 +33,25 @@ export const removeCourseFromUser = async (courseId: string): Promise<void> => {
 
 export const resetCourseProgress = async (courseId: string): Promise<void> => {
   return api
-    .patch(`/users/me/courses/${courseId}/reset`)
+    .patch(`/courses/${courseId}/reset`)
+    .then((response) => response.data);
+};
+
+export const resetWorkoutProgress = async (
+  courseId: string,
+  workoutId: string,
+): Promise<void> => {
+  return api
+    .patch(`/courses/${courseId}/workouts/${workoutId}/reset`)
+    .then((response) => response.data);
+};
+
+export const sendWorkoutProgress = async (
+  courseId: string,
+  workoutId: string,
+  data: { progressData: number[] },
+): Promise<void> => {
+  return api
+    .patch(`/courses/${courseId}/workouts/${workoutId}`, data)
     .then((response) => response.data);
 };
