@@ -125,6 +125,11 @@ const Workout = () => {
                         Упражнения тренировки{' '}
                         {parseWorkoutName(workout.name).title}
                       </h2>
+                      {exerciseProgress.length === 0 && (
+                        <p className="text-2xl text-center">
+                          Для данной тренировки нет упражнений
+                        </p>
+                      )}
                       <div className="grid gap-6 md:gap-5 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
                         {exerciseProgress.map((exercise, index) => (
                           <Execute
