@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Button from '../Button/Button';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/hooks/useAuth';
@@ -13,6 +13,8 @@ type HeaderPropsType = {
 const Header = ({ privatePage = false }: HeaderPropsType) => {
   const { isAuthenticated, logout, user } = useAuth();
   const [isUserPopUpShown, setIsUserPopUpShown] = useState<boolean>(false);
+  const profileButtonRef = useRef<HTMLDivElement>(null);
+  const userPopUpRef = useRef<HTMLDivElement>(null);
   const { openAuthModal } = useAuthModal();
 
   const router = useRouter();
@@ -24,6 +26,36 @@ const Header = ({ privatePage = false }: HeaderPropsType) => {
   const handleLogoClick = () => {
     router.push('/');
   };
+
+  const handleLogout = () => {
+    logout();
+    router.push('/');
+  };
+
+  useEffect(() => {
+    if (!isUserPopUpShown) {
+      return;
+    }
+
+    const handleClickOutside = (event: MouseEvent) => {
+      const target = event.target as Node;
+
+      if (
+        profileButtonRef.current?.contains(target) ||
+        userPopUpRef.current?.contains(target)
+      ) {
+        return;
+      }
+
+      setIsUserPopUpShown(false);
+    };
+
+    document.addEventListener('click', handleClickOutside);
+
+    return () => {
+      document.removeEventListener('click', handleClickOutside);
+    };
+  }, [isUserPopUpShown]);
 
   return (
     <header className="relative max-w-290 mt-10 mx-auto flex items-start justify-between px-4 md:px-6 lg:px-8 xl:px-0">
@@ -42,6 +74,7 @@ const Header = ({ privatePage = false }: HeaderPropsType) => {
       </div>
       {isAuthenticated ? (
         <div
+          ref={profileButtonRef}
           className="flex flex-row items-center relative cursor-pointer"
           onClick={() => handleProfileClick()}
         >
@@ -72,7 +105,10 @@ const Header = ({ privatePage = false }: HeaderPropsType) => {
         </Button>
       )}
       {isUserPopUpShown && (
-        <div className="absolute right-0 top-full z-20 p-7.5 flex flex-col items-center gap-8.5 rounded-[30px] bg-white shadow-[0_4px_67px_-12px_rgba(0,0,0,0.13)]">
+        <div
+          ref={userPopUpRef}
+          className="absolute right-0 top-full z-20 p-7.5 flex flex-col items-center gap-8.5 rounded-[30px] bg-white shadow-[0_4px_67px_-12px_rgba(0,0,0,0.13)]"
+        >
           <div className="flex flex-col items-center gap-2.5 text-lg leading-[1.1]">
             <p className="text-black">{user?.name}</p>
             <p className="text-text-inactive">{user?.email}</p>
@@ -81,7 +117,11 @@ const Header = ({ privatePage = false }: HeaderPropsType) => {
             <Button onClick={() => router.push('/profile')} className="w-full">
               Мой профиль
             </Button>
-            <Button variant="secondary" className="w-full" onClick={logout}>
+            <Button
+              variant="secondary"
+              className="w-full"
+              onClick={handleLogout}
+            >
               Выйти
             </Button>
           </div>

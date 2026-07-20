@@ -9,10 +9,12 @@ import { useCourses } from '@/hooks/useCourses';
 import { resetCourseProgress } from '@/services/fitness/coursesApi';
 import { CourseType } from '@/types/coursesTypes';
 import { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
 
 const Main = () => {
-  const { user, refreshUserData } = useAuth();
+  const { user, refreshUserData, logout } = useAuth();
   const { courses } = useCourses();
+  const router = useRouter();
   const [addedCourses, setAddedCourses] = useState<CourseType[] | null>(null);
   const [shownWorkouts, setShownWorkouts] = useState<string | null>(null);
   useEffect(() => {
@@ -57,6 +59,18 @@ const Main = () => {
     }
   };
 
+  const handleLogout = () => {
+    logout();
+    router.push('/');
+  };
+
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth', // плавная прокрутка
+    });
+  };
+
   return (
     <>
       {shownWorkouts && (
@@ -82,7 +96,11 @@ const Main = () => {
               <p className="text-black text-[16px] font-normal leading-[1.1] md:mb-3.5 md:text-[18px]">
                 Логин: {user?.email}
               </p>
-              <Button variant="secondary" className="md:w-35">
+              <Button
+                variant="secondary"
+                className="md:w-35"
+                onClick={handleLogout}
+              >
                 Выйти
               </Button>
             </div>
@@ -113,7 +131,9 @@ const Main = () => {
                 ))
             )}
           </div>
-          <Button className="ml-auto md:hidden">Наверх ↑</Button>
+          <Button className="ml-auto md:hidden" onClick={scrollToTop}>
+            Наверх ↑
+          </Button>
         </div>
       </main>
     </>
