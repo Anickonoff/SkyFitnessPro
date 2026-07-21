@@ -71,7 +71,7 @@ SkyFitnessPro — веб-приложение для прохождения он
 ## Установка
 
 ```bash
-git clone https://github.com/<your_username>/SkyFitnessPro.git
+git clone https://github.com/Anickonoff/SkyFitnessPro.git
 
 cd SkyFitnessPro
 
