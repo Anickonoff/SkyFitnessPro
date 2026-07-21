@@ -104,7 +104,7 @@ npm run lint
 ### Запуск тестов
 
 ```bash
-npm test
+npm run test
 ```
 
 ---
@@ -169,18 +169,6 @@ src/constants/constants.ts
 Для модульного тестирования используется **Jest**.
 
 Покрыты тестами основные функции обработки данных приложения, включая вычисление прогресса пользователя и работу со вспомогательными утилитами.
-
----
-
-## Используемые инструменты
-
-- Next.js App Router
-- React Context API
-- Axios
-- Tailwind CSS
-- Jest
-- ESLint
-- Prettier
 
 ---
 
