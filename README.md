@@ -1,36 +1,189 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+![Next.js](https://img.shields.io/badge/Next.js-16-black)
+![React](https://img.shields.io/badge/React-19-61DAFB)
+![TypeScript](https://img.shields.io/badge/TypeScript-5-3178C6)
+![TailwindCSS](https://img.shields.io/badge/Tailwind-v4-38BDF8)
 
-## Getting Started
+# SkyFitnessPro
 
-First, run the development server:
+SkyFitnessPro — веб-приложение для прохождения онлайн-курсов по фитнесу, разработанное в качестве дипломного проекта курса Frontend-разработки. Пользователь может зарегистрироваться, выбрать курс, выполнять тренировки, отслеживать прогресс и управлять своими курсами через личный кабинет.
+
+- 🌐 **Демо:** https://project9.anickonoff.ru
+- ⚛️ **Стек:** Next.js 16 · React 19 · TypeScript · Tailwind CSS
+- 🧪 **Тестирование:** Jest
+
+
+## Скриншоты
+
+| Каталог | Тренировка |
+|----------|------------|
+| ![](docs/images/main.png) | ![](docs/images/workout.png) |
+
+| Курс | Профиль |
+|------|----------|
+| ![](docs/images/course.png) | ![](docs/images/profile.png) |
+
+---
+
+## Возможности
+
+- Регистрация и авторизация пользователей
+- Просмотр каталога фитнес-курсов
+- Просмотр подробной информации о курсах
+- Добавление и удаление курсов из личного кабинета
+- Просмотр списка тренировок выбранного курса
+- Выполнение упражнений с сохранением прогресса
+- Автоматическое определение завершения тренировки
+- Отображение прогресса прохождения каждого курса
+- Личный кабинет пользователя
+- Адаптивный интерфейс для ПК, планшетов и мобильных устройств
+- Обработка ошибок при работе с API
+
+---
+
+## Особенности реализации
+
+- приложение построено на Next.js App Router;
+- маршруты разделены на публичную и приватную части;
+- управление состоянием пользователя реализовано через React Context API;
+- все HTTP-запросы выполняются через единый экземпляр Axios с интерцепторами;
+- JWT-токен хранится в `localStorage`;
+- порядок тренировок синхронизируется с порядком, заданным курсом;
+- прогресс пользователя автоматически рассчитывается и синхронизируется с сервером;
+- основные утилиты покрыты модульными тестами на Jest.
+
+---
+
+## Стек технологий
+
+| Технология | Версия |
+|------------|---------|
+| Next.js | 16.2.7 |
+| React | 19.2.4 |
+| TypeScript | 5 |
+| Tailwind CSS | 4 |
+| Axios | — |
+| Jest | — |
+| ESLint | 9 |
+| Prettier | — |
+
+---
+
+## Установка
+
+```bash
+git clone https://github.com/<your_username>/SkyFitnessPro.git
+
+cd SkyFitnessPro
+
+npm install
+```
+
+---
+
+## Запуск
+
+### Режим разработки
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Production-сборка
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+npm run build
+npm run start
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### Проверка кода
 
-## Learn More
+```bash
+npm run lint
+```
 
-To learn more about Next.js, take a look at the following resources:
+### Запуск тестов
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```bash
+npm test
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+---
 
-## Deploy on Vercel
+## Структура проекта
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```
+src
+├── app
+│   ├── (public)
+│   └── (private)
+├── components
+├── context
+├── services
+├── hooks
+├── utils
+├── constants
+└── types
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+---
+
+## Архитектура
+
+Проект построен на **Next.js App Router**.
+
+Особенности реализации:
+
+- разделение публичной и приватной части приложения;
+- авторизация реализована через Context API;
+- JWT-токен хранится в localStorage;
+- единый экземпляр Axios с интерцепторами для работы с API;
+- пользовательский прогресс синхронизируется с сервером;
+- тренировки отображаются в порядке, определённом курсом;
+- модальные окна используются для авторизации, выбора тренировок и ввода прогресса.
+
+---
+
+## API
+
+Приложение использует REST API SkyPro.
+
+Основные возможности API:
+
+- регистрация пользователя;
+- авторизация;
+- получение списка курсов;
+- получение списка тренировок;
+- получение данных пользователя;
+- сохранение прогресса тренировок.
+
+Адрес API задаётся в файле:
+
+```
+src/constants/constants.ts
+```
+
+---
+
+## Тестирование
+
+Для модульного тестирования используется **Jest**.
+
+Покрыты тестами основные функции обработки данных приложения, включая вычисление прогресса пользователя и работу со вспомогательными утилитами.
+
+---
+
+## Используемые инструменты
+
+- Next.js App Router
+- React Context API
+- Axios
+- Tailwind CSS
+- Jest
+- ESLint
+- Prettier
+
+---
+
+## Автор
+
+Антон Никонов
