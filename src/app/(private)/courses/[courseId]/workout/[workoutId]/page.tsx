@@ -14,7 +14,7 @@ import { ExerciseProgressType, WorkoutType } from '@/types/coursesTypes';
 import { getWorkoutProgressData } from '@/utils/getWorkoutProgressData';
 import { parseExerciseName } from '@/utils/parseExerciseName';
 import { parseWorkoutName } from '@/utils/parseWorkoutName';
-import { useParams } from 'next/navigation';
+import { notFound, useParams } from 'next/navigation';
 import { useEffect, useMemo, useState } from 'react';
 
 const Workout = () => {
@@ -25,9 +25,17 @@ const Workout = () => {
   const [workout, setWorkout] = useState<WorkoutType | null>();
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [error, setError] = useState<string>('');
+  const { isCoursesLoading } = useCourses();
   const { courses } = useCourses();
   const { user, refreshUserData } = useAuth();
   const [shownProgressForm, setShownProgressForm] = useState<boolean>(false);
+
+  const course = courses.find((course) => course._id === courseId);
+  const workoutExistsInCourse = course?.workouts.some((id) => id === workoutId);
+
+  if (!isCoursesLoading && !workoutExistsInCourse) {
+    notFound();
+  }
 
   useEffect(() => {
     const getWorkout = async () => {

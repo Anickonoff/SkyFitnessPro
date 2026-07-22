@@ -6,23 +6,20 @@ import { useAuth } from '@/hooks/useAuth';
 import { useAuthModal } from '@/hooks/useAuthModal';
 import { useCourses } from '@/hooks/useCourses';
 import { addCourseToUser } from '@/services/fitness/coursesApi';
-import { CourseType } from '@/types/coursesTypes';
-import { useParams, useRouter } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { notFound, useParams, useRouter } from 'next/navigation';
 
 const coursePage = () => {
   const { courseId } = useParams<{ courseId: string }>();
   const { isCoursesLoading, getCourseById } = useCourses();
-  const { isAuthenticated, user } = useAuth();
-  const [course, setCourse] = useState<CourseType | undefined>(undefined);
+  const { user } = useAuth();
   const { openAuthModal } = useAuthModal();
-  useEffect(() => {
-    if (!isCoursesLoading) {
-      const courseById = getCourseById(courseId);
-      setCourse(courseById);
-    }
-  }, [isCoursesLoading, courseId, getCourseById]);
+
+  const course = !isCoursesLoading ? getCourseById(courseId) : null;
   const router = useRouter();
+
+  if (!isCoursesLoading && !course) {
+    notFound();
+  }
 
   const handleClick = () => {
     if (user) {
