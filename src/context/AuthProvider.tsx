@@ -4,6 +4,7 @@ import { ReactNode, useEffect, useState } from 'react';
 import { AuthContext } from './AuthContext';
 import { CourseProgress, LoginProps } from '@/types/authtypes';
 import authApi from '@/services/auth/authApi';
+import { setLogoutHandler } from './authEvents';
 
 export type User = {
   name: string;
@@ -83,6 +84,10 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
     updateUserData(null);
     updateToken(null);
   };
+
+  useEffect(() => {
+    setLogoutHandler(logout);
+  }, [logout]);
 
   return (
     <AuthContext.Provider

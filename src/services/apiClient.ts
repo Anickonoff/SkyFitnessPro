@@ -1,4 +1,5 @@
 import { BASE_URL } from '@/constants/constants';
+import { triggerLogout } from '@/context/authEvents';
 import axios, { AxiosError } from 'axios';
 
 type ApiErrorResponse = {
@@ -26,6 +27,12 @@ api.interceptors.response.use(
   (response) => response,
   (error: AxiosError<ApiErrorResponse>) => {
     if (error.response) {
+      if (error.response.status === 401) {
+        triggerLogout();
+        return Promise.reject(
+          new Error('Сессия истекла. Выполните вход снова.'),
+        );
+      }
       const message = error.response.data?.message || 'Ошибка сервера';
       return Promise.reject(new Error(message));
     }
