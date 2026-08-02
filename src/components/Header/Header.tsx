@@ -1,0 +1,134 @@
+'use client';
+
+import { useEffect, useRef, useState } from 'react';
+import Button from '../Button/Button';
+import { useRouter } from 'next/navigation';
+import { useAuth } from '@/hooks/useAuth';
+import { useAuthModal } from '@/hooks/useAuthModal';
+
+type HeaderPropsType = {
+  privatePage?: boolean;
+};
+
+const Header = ({ privatePage = false }: HeaderPropsType) => {
+  const { isAuthenticated, logout, user } = useAuth();
+  const [isUserPopUpShown, setIsUserPopUpShown] = useState<boolean>(false);
+  const profileButtonRef = useRef<HTMLDivElement>(null);
+  const userPopUpRef = useRef<HTMLDivElement>(null);
+  const { openAuthModal } = useAuthModal();
+
+  const router = useRouter();
+
+  const handleProfileClick = () => {
+    setIsUserPopUpShown((prev) => !prev);
+  };
+
+  const handleLogoClick = () => {
+    router.push('/');
+  };
+
+  const handleLogout = () => {
+    logout();
+    router.push('/');
+  };
+
+  useEffect(() => {
+    if (!isUserPopUpShown) {
+      return;
+    }
+
+    const handleClickOutside = (event: MouseEvent) => {
+      const target = event.target as Node;
+
+      if (
+        profileButtonRef.current?.contains(target) ||
+        userPopUpRef.current?.contains(target)
+      ) {
+        return;
+      }
+
+      setIsUserPopUpShown(false);
+    };
+
+    document.addEventListener('click', handleClickOutside);
+
+    return () => {
+      document.removeEventListener('click', handleClickOutside);
+    };
+  }, [isUserPopUpShown]);
+
+  return (
+    <header className="relative max-w-290 mt-10 mx-auto flex items-start justify-between px-4 md:px-6 lg:px-8 xl:px-0">
+      <div className="flex gap-3.75 items-start flex-col">
+        <img
+          src="/images/logo.svg"
+          alt="Logo"
+          className="h-8.75 cursor-pointer"
+          onClick={handleLogoClick}
+        />
+        {!privatePage && (
+          <p className="hidden md:block text-black text-lg font-normal leading-[1.1] opacity-50">
+            Онлайн-тренировки для занятий дома
+          </p>
+        )}
+      </div>
+      {isAuthenticated ? (
+        <div
+          ref={profileButtonRef}
+          className="flex flex-row items-center relative cursor-pointer"
+          onClick={() => handleProfileClick()}
+        >
+          <img
+            src="/images/header-photo.png"
+            className="h-9 md:h-12.5 mr-2.5 md:mr-4"
+          />
+          <div className="hidden md:block text-2xl lining-nums proportional-nums leading-[1.1] mr-3">
+            {user?.name}
+          </div>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="10"
+            height="7"
+            viewBox="0 0 10 7"
+            fill="none"
+          >
+            <path
+              d="M8.70715 0.707031L4.70715 4.70703L0.707153 0.707031"
+              stroke="black"
+              strokeWidth="2"
+            />
+          </svg>
+        </div>
+      ) : (
+        <Button onClick={openAuthModal} size="small">
+          Войти
+        </Button>
+      )}
+      {isUserPopUpShown && (
+        <div
+          ref={userPopUpRef}
+          className="absolute right-0 top-full z-20 p-7.5 flex flex-col items-center gap-8.5 rounded-[30px] bg-white shadow-[0_4px_67px_-12px_rgba(0,0,0,0.13)]"
+        >
+          <div className="flex flex-col items-center gap-2.5 text-lg leading-[1.1]">
+            <p className="text-black">{user?.name}</p>
+            <p className="text-text-inactive">{user?.email}</p>
+          </div>
+          <div className="flex flex-col items-center gap-2.5 w-full">
+            <Button onClick={() => router.push('/profile')} className="w-full">
+              Мой профиль
+            </Button>
+            <Button
+              variant="secondary"
+              className="w-full"
+              onClick={handleLogout}
+            >
+              Выйти
+            </Button>
+          </div>
+        </div>
+      )}
+    </header>
+  );
+};
+
+export default Header;
