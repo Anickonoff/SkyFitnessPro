@@ -12,7 +12,6 @@ import {
 } from '@/services/fitness/coursesApi';
 import { ExerciseProgressType, WorkoutType } from '@/types/coursesTypes';
 import { getWorkoutProgressData } from '@/utils/getWorkoutProgressData';
-import { parseExerciseName } from '@/utils/parseExerciseName';
 import { parseWorkoutName } from '@/utils/parseWorkoutName';
 import { notFound, useParams } from 'next/navigation';
 import { useEffect, useMemo, useState } from 'react';
@@ -22,11 +21,10 @@ const Workout = () => {
     courseId: string;
     workoutId: string;
   }>();
-  const [workout, setWorkout] = useState<WorkoutType | null>();
+  const [workout, setWorkout] = useState<WorkoutType | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [error, setError] = useState<string>('');
-  const { isCoursesLoading } = useCourses();
-  const { courses } = useCourses();
+  const { isCoursesLoading, courses } = useCourses();
   const { user, refreshUserData } = useAuth();
   const [shownProgressForm, setShownProgressForm] = useState<boolean>(false);
 
@@ -34,16 +32,16 @@ const Workout = () => {
   const workoutExistsInCourse = course?.workouts.some((id) => id === workoutId);
 
   if (!isCoursesLoading && !workoutExistsInCourse) {
-    notFound();
+    return notFound();
   }
 
   useEffect(() => {
     const getWorkout = async () => {
       try {
         setIsLoading(true);
+        setError('');
         const response = await getWorkoutById(workoutId);
         setWorkout(response);
-        setError('');
       } catch (error) {
         console.error(error);
         if (error instanceof Error) {
@@ -67,15 +65,16 @@ const Workout = () => {
         name: exercise.name,
         current: current,
         max: exercise.quantity,
-        percent: Math.floor((current / exercise.quantity) * 100),
+        percent: exercise.quantity
+          ? Math.floor((current / exercise.quantity) * 100)
+          : 100,
         id: exercise._id,
       };
     });
     return progress;
   }, [user, courseId, workoutId, workout]);
 
-  const courseTitle =
-    courses.find((course) => course._id === courseId)?.nameRU || 'Unknown';
+  const courseTitle = course?.nameRU ?? 'Unknown';
 
   const isWorkoutCompleted = (exercises: ExerciseProgressType[]) => {
     return exercises.every((exercise) => exercise.current >= exercise.max);
@@ -142,7 +141,7 @@ const Workout = () => {
                         {exerciseProgress.map((exercise, index) => (
                           <Execute
                             key={exercise.id}
-                            title={parseExerciseName(exercise.name)}
+                            title={exercise.name}
                             progress={exercise.percent}
                           />
                         ))}

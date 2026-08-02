@@ -61,7 +61,7 @@ const Header = ({ privatePage = false }: HeaderPropsType) => {
     <header className="relative max-w-290 mt-10 mx-auto flex items-start justify-between px-4 md:px-6 lg:px-8 xl:px-0">
       <div className="flex gap-3.75 items-start flex-col">
         <img
-          src="/images/logo.png"
+          src="/images/logo.svg"
           alt="Logo"
           className="h-8.75 cursor-pointer"
           onClick={handleLogoClick}
