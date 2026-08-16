@@ -2,11 +2,14 @@
 
 import { useAuth } from '@/hooks/useAuth';
 import Card from '../Card/Card';
-import { useCourses } from '@/hooks/useCourses';
 import { СourseActionStateType } from '@/types/otherTypes';
+import { CourseType } from '@/types/coursesTypes';
 
-const CoursesList = () => {
-  const { courses, isCoursesLoading } = useCourses();
+type CourseListProps = {
+  courses: CourseType[];
+};
+
+const CoursesList = ({ courses }: CourseListProps) => {
   const { user } = useAuth();
   const defineCourseActionState = (id: string): СourseActionStateType =>
     !user
@@ -17,25 +20,22 @@ const CoursesList = () => {
 
   return (
     <div className="mt-8.5 max-w-290 mx-auto flex gap-6 md:gap-10 md:mt-12.5 flex-wrap justify-start">
-      {isCoursesLoading ? (
-        <p>Загрузка списка курсов...</p>
-      ) : (
-        courses
-          .sort((a, b) => a.order - b.order)
-          .map((course) => (
-            <Card
-              key={course._id}
-              variant="catalog"
-              nameRU={course.nameRU}
-              durationInDays={course.durationInDays.toString()}
-              difficulty={course.difficulty}
-              dailyDurationInMinutes={course.dailyDurationInMinutes}
-              order={course.order}
-              id={course._id}
-              courseActionState={defineCourseActionState(course._id)}
-            />
-          ))
-      )}
+      {courses
+        .slice()
+        .sort((a, b) => a.order - b.order)
+        .map((course) => (
+          <Card
+            key={course._id}
+            variant="catalog"
+            nameRU={course.nameRU}
+            durationInDays={course.durationInDays.toString()}
+            difficulty={course.difficulty}
+            dailyDurationInMinutes={course.dailyDurationInMinutes}
+            order={course.order}
+            id={course._id}
+            courseActionState={defineCourseActionState(course._id)}
+          />
+        ))}
     </div>
   );
 };

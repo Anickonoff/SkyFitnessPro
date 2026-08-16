@@ -1,15 +1,16 @@
-'use client';
-
-import Button from '@/components/Button/Button';
 import CoursesList from '@/components/CoursesList/CoursesList';
+import ScrollToTop from '@/components/ScrollToTop/ScrollToTop';
+import { getAllCourses } from '@/services/fitness/coursesApi';
+import { Metadata } from 'next';
 
-const Main = () => {
-  const scrollToTop = () => {
-    window.scrollTo({
-      top: 0,
-      behavior: 'smooth', // плавная прокрутка
-    });
-  };
+export const metadata: Metadata = {
+  title: 'SkyFitnessPro - Каталог курсов',
+  description: 'Каталог курсов SkyFitnessPro',
+};
+
+const Main = async () => {
+  const courses = await getAllCourses();
+
   return (
     <main className="px-4 md:px-6 lg:px-8">
       <div className="flex flex-row items-start gap-7 mt-5 mx-auto max-w-290 md:mt-10 lg:mt-15">
@@ -33,13 +34,8 @@ const Main = () => {
           </svg>
         </div>
       </div>
-      <CoursesList />
-      <Button
-        className="mt-6 ml-auto md:mt-8.5 md:mx-auto"
-        onClick={scrollToTop}
-      >
-        Наверх ↑
-      </Button>
+      <CoursesList courses={courses} />
+      <ScrollToTop />
     </main>
   );
 };
