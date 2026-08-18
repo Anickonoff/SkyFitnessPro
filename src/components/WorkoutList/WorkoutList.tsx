@@ -3,18 +3,17 @@ import Button from '../Button/Button';
 import { getAllWorkoutsByCourseId } from '@/services/fitness/coursesApi';
 import { useEffect, useMemo, useState } from 'react';
 import { WorkoutType } from '@/types/coursesTypes';
-import { useCourses } from '@/hooks/useCourses';
 import { parseWorkoutName } from '@/utils/parseWorkoutName';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 
 type WorkoutListProps = {
   courseId: string;
+  workoutIds?: string[];
 };
 
-const WorkoutList = ({ courseId }: WorkoutListProps) => {
+const WorkoutList = ({ courseId, workoutIds }: WorkoutListProps) => {
   const { user } = useAuth();
-  const { courses } = useCourses();
   const [workouts, setWorkouts] = useState<WorkoutType[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [error, setError] = useState<string>('');
@@ -39,15 +38,12 @@ const WorkoutList = ({ courseId }: WorkoutListProps) => {
   }, [courseId]);
 
   const orderWorkoutsByCourse = (workouts: WorkoutType[]) => {
-    const listWokroutIds = courses.find(
-      (course) => course._id === courseId,
-    )?.workouts;
-    if (!listWokroutIds) return [];
+    if (!workoutIds) return workouts;
     const workoutsMap = new Map(
       workouts.map((workout) => [workout._id, workout]),
     );
     const sortedWorkouts: WorkoutType[] = [];
-    listWokroutIds.forEach((workoutId) => {
+    workoutIds.forEach((workoutId) => {
       const workout = workoutsMap.get(workoutId);
       if (workout) {
         sortedWorkouts.push(workout);

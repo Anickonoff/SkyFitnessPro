@@ -2,7 +2,6 @@ import type { Metadata } from 'next';
 import { Roboto } from 'next/font/google';
 import './globals.css';
 import AuthProvider from '@/context/AuthProvider';
-import CoursesProvider from '@/context/CoursesProvider';
 import AuthModalProvider from '@/context/AuthModalProvider';
 
 const roboto = Roboto({
@@ -25,9 +24,7 @@ export default function RootLayout({
       <body className="min-h-full flex flex-col">
         <div className="md:bg-[#fafafa] pb-7.25 md:pb-20.25">
           <AuthProvider>
-            <AuthModalProvider>
-              <CoursesProvider>{children}</CoursesProvider>
-            </AuthModalProvider>
+            <AuthModalProvider>{children}</AuthModalProvider>
           </AuthProvider>
         </div>
       </body>

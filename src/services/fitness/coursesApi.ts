@@ -1,12 +1,29 @@
 import api from '../apiClient';
 import { CourseType, WorkoutType } from '../../types/coursesTypes';
+import { BASE_URL } from '@/constants/constants';
+
+// export const getAllCourses = async (): Promise<CourseType[]> => {
+//   return api.get('/courses').then((response) => response.data);
+// };
 
 export const getAllCourses = async (): Promise<CourseType[]> => {
-  return api.get('/courses').then((response) => response.data);
+  const res = await fetch(`${BASE_URL}/courses`, {
+    next: { revalidate: 3600 }, // ISR: ревалидация раз в час
+  });
+  if (!res.ok) throw new Error('Ошибка загрузки курсов');
+  return res.json();
 };
 
+// export const getCourseById = async (id: string): Promise<CourseType> => {
+//   return api.get(`/courses/${id}`).then((response) => response.data);
+// };
+
 export const getCourseById = async (id: string): Promise<CourseType> => {
-  return api.get(`/courses/${id}`).then((response) => response.data);
+  const res = await fetch(`${BASE_URL}/courses/${id}`, {
+    next: { revalidate: 3600 },
+  });
+  if (!res.ok) throw new Error('Ошибка загрузки курса');
+  return res.json();
 };
 
 export const getAllWorkoutsByCourseId = async (
