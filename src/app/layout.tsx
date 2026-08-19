@@ -3,6 +3,7 @@ import { Roboto } from 'next/font/google';
 import './globals.css';
 import AuthProvider from '@/context/AuthProvider';
 import AuthModalProvider from '@/context/AuthModalProvider';
+import { Toaster } from 'sonner';
 
 const roboto = Roboto({
   variable: '--font-roboto',
@@ -24,7 +25,15 @@ export default function RootLayout({
       <body className="min-h-full flex flex-col">
         <div className="md:bg-[#fafafa] pb-7.25 md:pb-20.25">
           <AuthProvider>
-            <AuthModalProvider>{children}</AuthModalProvider>
+            <AuthModalProvider>
+              {children}
+              <Toaster
+                position="bottom-right"
+                richColors
+                closeButton
+                duration={3500}
+              />
+            </AuthModalProvider>
           </AuthProvider>
         </div>
       </body>
