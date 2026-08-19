@@ -3,6 +3,7 @@ import Button from '../Button/Button';
 import { useAuth } from '@/hooks/useAuth';
 import authApi from '@/services/auth/authApi';
 import { useAuthModal } from '@/hooks/useAuthModal';
+import { toast } from 'sonner';
 
 const Auth = () => {
   const { login } = useAuth();
@@ -115,17 +116,21 @@ const Auth = () => {
       if (authMode === 'login') {
         await login({ email: formData.email, password: formData.password });
         closeAuthModal();
+        toast.success('Вы успешно вошли!');
       } else {
         await authApi.register({
           email: formData.email,
           password: formData.password,
         });
-
         setAuthMode('login');
         setInfoMsg('Регистрация завершена. Войдите в систему');
+        toast.success('Регистрация прошла успешно! Теперь выполните вход.');
       }
     } catch (error) {
-      if (error instanceof Error) setError(error.message);
+      if (error instanceof Error) {
+        setError(error.message);
+        toast.error(error.message);
+      }
     }
   };
 

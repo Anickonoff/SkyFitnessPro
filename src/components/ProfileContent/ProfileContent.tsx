@@ -10,6 +10,7 @@ import { CourseType } from '@/types/coursesTypes';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import ScrollToTop from '@/components/ScrollToTop/ScrollToTop';
+import { toast } from 'sonner';
 
 type ProfileContentProps = {
   courses: CourseType[];
@@ -60,6 +61,7 @@ const ProfileContent = ({ courses }: ProfileContentProps) => {
   const handleLogout = () => {
     logout();
     router.push('/');
+    toast.info('Вы вышли из учётной записи!');
   };
 
   const selectedCourse = courses.find((course) => course._id === shownWorkouts);
