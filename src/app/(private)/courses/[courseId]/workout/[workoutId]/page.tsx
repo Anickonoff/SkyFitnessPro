@@ -31,7 +31,8 @@ export const Workout = async ({ params }: WorkoutProps) => {
 
   try {
     course = await getCourseById(courseId);
-  } catch {
+  } catch (err) {
+    console.error('Ошибка загрузки курса в page.tsx:', err);
     notFound();
   }
 

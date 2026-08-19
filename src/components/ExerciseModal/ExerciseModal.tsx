@@ -4,6 +4,7 @@ import Button from '../Button/Button';
 import { parseExerciseQuestion } from '@/utils/parseExerciseName';
 import { sendWorkoutProgress } from '@/services/fitness/coursesApi';
 import { useAuth } from '@/hooks/useAuth';
+import { toast } from 'sonner';
 
 type ExersiceModalProps = {
   exercises: ExerciseProgressType[];
@@ -37,6 +38,9 @@ const ExerciseModal = ({
       setError(
         'Введите количество выполненных повторений хотя бы для одного упражнения.',
       );
+      toast.warning(
+        'Введите количество выполненных повторений хотя бы для одного упражнения.',
+      );
       setErrors({});
       return false;
     }
@@ -60,6 +64,9 @@ const ExerciseModal = ({
 
     if (!isValid) {
       setError(
+        'Количество повторений не может быть меньше уже сохранённого значения.',
+      );
+      toast.warning(
         'Количество повторений не может быть меньше уже сохранённого значения.',
       );
     }
@@ -107,11 +114,14 @@ const ExerciseModal = ({
       });
       await refreshUserData();
       setModalMode('result');
+      toast.success('Прогресс тренировки успешно сохранен!');
     } catch (error) {
       if (error instanceof Error) {
         setError(error.message);
+        toast.error(error.message);
       } else {
         setError('Неизвестная ошибка');
+        toast.error('Неизвестная ошибка');
       }
     } finally {
       setIsSending(false);

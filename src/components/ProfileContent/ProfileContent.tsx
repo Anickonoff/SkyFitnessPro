@@ -47,8 +47,13 @@ const ProfileContent = ({ courses }: ProfileContentProps) => {
     if (progress < 100) {
       setShownWorkouts(courseId);
     } else {
-      await resetCourseProgress(courseId);
-      await refreshUserData();
+      try {
+        await resetCourseProgress(courseId);
+        await refreshUserData();
+        toast.success('Прогресс курса сброшен. Удачи в новых тренировках!');
+      } catch (error) {
+        toast.error('Не удалось сбросить прогресс курса.');
+      }
     }
   };
 

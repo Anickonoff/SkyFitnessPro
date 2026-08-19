@@ -13,6 +13,7 @@ import ExerciseModal from '@/components/ExerciseModal/ExerciseModal';
 import { parseWorkoutName } from '@/utils/parseWorkoutName';
 import Execute from '@/components/Execute/Execute';
 import Button from '@/components/Button/Button';
+import { toast } from 'sonner';
 
 type WorkoutContentProps = {
   courseId: string;
@@ -82,8 +83,13 @@ const WorkoutContent = ({ courseId, workoutId }: WorkoutContentProps) => {
 
   const handleBtnClick = async () => {
     if (isCompleted) {
-      await resetWorkoutProgress(courseId, workoutId);
-      await refreshUserData();
+      try {
+        await resetWorkoutProgress(courseId, workoutId);
+        await refreshUserData();
+        toast.success('Прогресс тренировки сброшен');
+      } catch (error) {
+        toast.error('Не удалось сбросить прогресс тренировки.');
+      }
     } else {
       setShownProgressForm(true);
     }
