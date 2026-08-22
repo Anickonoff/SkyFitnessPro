@@ -10,6 +10,7 @@ import { CourseType } from '@/types/coursesTypes';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import ScrollToTop from '@/components/ScrollToTop/ScrollToTop';
+import { toast } from 'sonner';
 
 type ProfileContentProps = {
   courses: CourseType[];
@@ -46,8 +47,17 @@ const ProfileContent = ({ courses }: ProfileContentProps) => {
     if (progress < 100) {
       setShownWorkouts(courseId);
     } else {
-      await resetCourseProgress(courseId);
-      await refreshUserData();
+      try {
+        await resetCourseProgress(courseId);
+        await refreshUserData();
+        toast.success('Прогресс курса сброшен. Удачи в новых тренировках!', {
+          id: `reset-course-${courseId}`,
+        });
+      } catch (error) {
+        toast.error('Не удалось сбросить прогресс курса.', {
+          id: `reset-course-error-${courseId}`,
+        });
+      }
     }
   };
 
@@ -60,6 +70,7 @@ const ProfileContent = ({ courses }: ProfileContentProps) => {
   const handleLogout = () => {
     logout();
     router.push('/');
+    toast.info('Вы вышли из учётной записи!', { id: 'auth-logout' });
   };
 
   const selectedCourse = courses.find((course) => course._id === shownWorkouts);

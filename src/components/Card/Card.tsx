@@ -9,6 +9,7 @@ import {
   removeCourseFromUser,
 } from '@/services/fitness/coursesApi';
 import { useAuth } from '@/hooks/useAuth';
+import { toast } from 'sonner';
 
 type BaseCardProps = {
   id: string;
@@ -42,10 +43,6 @@ const Card = (props: CardProps) => {
     courseActionState = 'unauthorized',
   } = props;
 
-  // if (profile) {
-  //   const { progress, courseButton } = props;
-  //   // здесь они гарантированно существуют
-  // }
   const { refreshUserData } = useAuth();
 
   const tooltipText =
@@ -59,12 +56,22 @@ const Card = (props: CardProps) => {
     if (courseActionState === 'unauthorized') {
       return;
     }
-    if (courseActionState === 'added') {
-      await removeCourseFromUser(id);
-    } else {
-      await addCourseToUser(id);
+    try {
+      if (courseActionState === 'added') {
+        await removeCourseFromUser(id);
+        toast.success(`Курс "${nameRU}" удален из профиля`, {
+          id: `course-${id}`,
+        });
+      } else {
+        await addCourseToUser(id);
+        toast.success(`Курс "${nameRU}" успешно добавлен в профиль`, {
+          id: `course-${id}`,
+        });
+      }
+      await refreshUserData();
+    } catch (error) {
+      toast.error('Не удалось обновить список курсов. Попробуйте позже');
     }
-    await refreshUserData();
     return;
   };
 

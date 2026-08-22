@@ -5,6 +5,7 @@ import Button from '../Button/Button';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/hooks/useAuth';
 import { useAuthModal } from '@/hooks/useAuthModal';
+import { toast } from 'sonner';
 
 type HeaderPropsType = {
   privatePage?: boolean;
@@ -30,6 +31,7 @@ const Header = ({ privatePage = false }: HeaderPropsType) => {
   const handleLogout = () => {
     logout();
     router.push('/');
+    toast.info('Вы вышли из учётной записи!', { id: 'auth-logout' });
   };
 
   useEffect(() => {
