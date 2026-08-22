@@ -43,10 +43,6 @@ const Card = (props: CardProps) => {
     courseActionState = 'unauthorized',
   } = props;
 
-  // if (profile) {
-  //   const { progress, courseButton } = props;
-  //   // здесь они гарантированно существуют
-  // }
   const { refreshUserData } = useAuth();
 
   const tooltipText =
@@ -63,10 +59,14 @@ const Card = (props: CardProps) => {
     try {
       if (courseActionState === 'added') {
         await removeCourseFromUser(id);
-        toast.success(`Курс "${nameRU}" удален из профиля`);
+        toast.success(`Курс "${nameRU}" удален из профиля`, {
+          id: `course-${id}`,
+        });
       } else {
         await addCourseToUser(id);
-        toast.success(`Курс "${nameRU}" успешно добавлен в профиль`);
+        toast.success(`Курс "${nameRU}" успешно добавлен в профиль`, {
+          id: `course-${id}`,
+        });
       }
       await refreshUserData();
     } catch (error) {

@@ -31,7 +31,7 @@ const Header = ({ privatePage = false }: HeaderPropsType) => {
   const handleLogout = () => {
     logout();
     router.push('/');
-    toast.info('Вы вышли из учётной записи!');
+    toast.info('Вы вышли из учётной записи!', { id: 'auth-logout' });
   };
 
   useEffect(() => {

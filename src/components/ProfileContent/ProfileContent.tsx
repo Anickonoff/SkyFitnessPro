@@ -50,9 +50,13 @@ const ProfileContent = ({ courses }: ProfileContentProps) => {
       try {
         await resetCourseProgress(courseId);
         await refreshUserData();
-        toast.success('Прогресс курса сброшен. Удачи в новых тренировках!');
+        toast.success('Прогресс курса сброшен. Удачи в новых тренировках!', {
+          id: `reset-course-${courseId}`,
+        });
       } catch (error) {
-        toast.error('Не удалось сбросить прогресс курса.');
+        toast.error('Не удалось сбросить прогресс курса.', {
+          id: `reset-course-error-${courseId}`,
+        });
       }
     }
   };
@@ -66,7 +70,7 @@ const ProfileContent = ({ courses }: ProfileContentProps) => {
   const handleLogout = () => {
     logout();
     router.push('/');
-    toast.info('Вы вышли из учётной записи!');
+    toast.info('Вы вышли из учётной записи!', { id: 'auth-logout' });
   };
 
   const selectedCourse = courses.find((course) => course._id === shownWorkouts);

@@ -116,7 +116,7 @@ const Auth = () => {
       if (authMode === 'login') {
         await login({ email: formData.email, password: formData.password });
         closeAuthModal();
-        toast.success('Вы успешно вошли!');
+        toast.success('Вы успешно вошли!', { id: 'auth-success' });
       } else {
         await authApi.register({
           email: formData.email,
@@ -124,12 +124,13 @@ const Auth = () => {
         });
         setAuthMode('login');
         setInfoMsg('Регистрация завершена. Войдите в систему');
-        toast.success('Регистрация прошла успешно! Теперь выполните вход.');
+        toast.success('Регистрация прошла успешно! Теперь выполните вход.', {
+          id: 'auth-register',
+        });
       }
     } catch (error) {
       if (error instanceof Error) {
         setError(error.message);
-        toast.error(error.message);
       }
     }
   };

@@ -40,6 +40,7 @@ const ExerciseModal = ({
       );
       toast.warning(
         'Введите количество выполненных повторений хотя бы для одного упражнения.',
+        { id: 'exercise-val' },
       );
       setErrors({});
       return false;
@@ -68,6 +69,7 @@ const ExerciseModal = ({
       );
       toast.warning(
         'Количество повторений не может быть меньше уже сохранённого значения.',
+        { id: 'exercise-val' },
       );
     }
 
@@ -114,11 +116,12 @@ const ExerciseModal = ({
       });
       await refreshUserData();
       setModalMode('result');
-      toast.success('Прогресс тренировки успешно сохранен!');
+      toast.success('Прогресс тренировки успешно сохранен!', {
+        id: 'exercise-save',
+      });
     } catch (error) {
       if (error instanceof Error) {
         setError(error.message);
-        toast.error(error.message);
       } else {
         setError('Неизвестная ошибка');
         toast.error('Неизвестная ошибка');

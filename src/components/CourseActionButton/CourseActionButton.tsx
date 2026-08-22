@@ -20,7 +20,9 @@ const CourseActionButton = ({ courseId }: CourseActionButtonProps) => {
 
   const handleClick = async () => {
     if (!user) {
-      toast.warning('Для добавления курса необходимо авторизоваться');
+      toast.warning('Для добавления курса необходимо авторизоваться', {
+        id: 'auth-warning',
+      });
       openAuthModal();
       return;
     }
@@ -30,7 +32,9 @@ const CourseActionButton = ({ courseId }: CourseActionButtonProps) => {
       try {
         await addCourseToUser(courseId);
         await refreshUserData();
-        toast.success('Курс успешно добавлен в профиль!');
+        toast.success('Курс успешно добавлен в профиль!', {
+          id: `course-${courseId}`,
+        });
       } catch (error) {
         toast.error('Не удалось добавить курс. Попробуйте позже.');
       }

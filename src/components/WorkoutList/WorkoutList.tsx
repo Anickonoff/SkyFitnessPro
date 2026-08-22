@@ -75,7 +75,10 @@ const WorkoutList = ({ courseId, workoutIds }: WorkoutListProps) => {
   };
 
   const handleBtnClick = () => {
-    goToWorkout(firstIncompleteWorkoutId ?? workouts[0]._id);
+    const targetWorkoutId = firstIncompleteWorkoutId ?? workouts[0]._id;
+    if (targetWorkoutId) {
+      goToWorkout(targetWorkoutId);
+    }
   };
 
   return (
@@ -118,7 +121,12 @@ const WorkoutList = ({ courseId, workoutIds }: WorkoutListProps) => {
                   );
                 })}
         </div>
-        <Button onClick={handleBtnClick}>Начать</Button>
+        <Button
+          onClick={handleBtnClick}
+          disabled={isLoading || workouts.length === 0}
+        >
+          Начать
+        </Button>
       </div>
     </div>
   );
