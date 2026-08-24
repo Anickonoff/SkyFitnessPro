@@ -5,6 +5,7 @@ import { parseExerciseQuestion } from '@/utils/parseExerciseName';
 import { sendWorkoutProgress } from '@/services/fitness/coursesApi';
 import { useAuth } from '@/hooks/useAuth';
 import { toast } from 'sonner';
+import Image from 'next/image';
 
 type ExersiceModalProps = {
   exercises: ExerciseProgressType[];
@@ -175,10 +176,13 @@ const ExerciseModal = ({
         <h1 className="w-full text-center text-[32px] leading-[1.1] md:font-semibold md:text-[40px]">
           Ваш прогресс засчитан
         </h1>
-        <img
+        <Image
           className="self-center"
-          src="/images/Check-in-Circle_big.svg"
-        ></img>
+          alt=""
+          width={68}
+          height={68}
+          src="/images/check-in-circle-big.svg"
+        ></Image>
       </div>
     );
   }

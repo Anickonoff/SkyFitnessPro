@@ -103,8 +103,8 @@ const WorkoutList = ({ courseId, workoutIds }: WorkoutListProps) => {
                       <img
                         src={
                           completedWorkoutIds.has(workout._id)
-                            ? '/images/Check-in-Circle.svg'
-                            : '/images/Check-out-Circle.svg'
+                            ? '/images/check-in-circle.svg'
+                            : '/images/check-out-circle.svg'
                         }
                       />
                       <div className="flex flex-col gap-2.5 justify-center items-start ">

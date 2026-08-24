@@ -2,6 +2,7 @@ import CourseActionButton from '@/components/CourseActionButton/CourseActionButt
 import { courseBgs, courseCovers } from '@/constants/courseCovers';
 import { getAllCourses, getCourseById } from '@/services/fitness/coursesApi';
 import { Metadata } from 'next';
+import Image from 'next/image';
 import { notFound } from 'next/navigation';
 
 type CoursePageProps = {
@@ -57,8 +58,11 @@ const coursePage = async ({ params }: CoursePageProps) => {
           <h1 className="text-white text-6xl font-medium leading-[1.1] hidden md:block">
             {course.nameRU}
           </h1>
-          <img
+          <Image
             src={`/images/${courseCovers[course.order]}-card.png`}
+            alt="Обложка курса"
+            width={360}
+            height={325}
             className="md:hidden absolute left-1/2 bottom-0 -translate-x-1/2 max-w-none"
           />
         </div>
@@ -90,7 +94,7 @@ const coursePage = async ({ params }: CoursePageProps) => {
             {course.directions.map((direction, index) => (
               <div key={index} className="flex flex-row gap-2 items-center">
                 <img
-                  src="/images/direction-Icon.svg"
+                  src="/images/direction-icon.svg"
                   className="w-6.5 h-6.5"
                   alt=""
                 />
@@ -104,9 +108,12 @@ const coursePage = async ({ params }: CoursePageProps) => {
       </div>
       <div className="relative -mt-25 lg:mt-25.5 mb-8 lg:mb-12 w-full">
         <div className="block relative lg:hidden w-full  h-84 md:h-70">
-          <img
-            className="w-93.75 absolute right-0 top-0"
-            src="/images/new-way_mobile.png"
+          <Image
+            alt=""
+            className="w-93.75 h-auto absolute right-0 top-0"
+            src="/images/new-way-mobile.png"
+            width={375}
+            height={456}
           />
         </div>
         <div className="px-4 md:px-6 lg:px-8">
@@ -130,9 +137,12 @@ const coursePage = async ({ params }: CoursePageProps) => {
               className="hidden lg:block absolute top-0 right-0 z-10 h-133 pointer-events-none rounded-md max-w-none"
             />
 
-            <img
+            <Image
+              alt=""
               src="/images/new-way.png"
-              className="hidden lg:block absolute right-7.5 -top-20.5 w-121.75 h-137 z-20 pointer-events-none rounded-md"
+              width={487}
+              height={538}
+              className="hidden lg:block absolute right-7.5 -top-20.5 w-121.75 h-134.5 z-20 pointer-events-none rounded-md"
             />
           </div>
         </div>

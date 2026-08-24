@@ -11,6 +11,7 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import ScrollToTop from '@/components/ScrollToTop/ScrollToTop';
 import { toast } from 'sonner';
+import Image from 'next/image';
 
 type ProfileContentProps = {
   courses: CourseType[];
@@ -91,10 +92,12 @@ const ProfileContent = ({ courses }: ProfileContentProps) => {
             Профиль
           </h2>
           <div className="p-7.5 rounded-[30px] bg-white shadow-[0_4px_67px_-12px_rgba(0,0,0,0.13)] flex flex-col gap-7.5 w-full md:flex-row md:gap-8.25">
-            <img
+            <Image
               src="/images/profile-photo.png"
               alt="Profile Photo"
-              className="h-35.25 rounded-[20px] mx-auto md:h-49.25 md:mx-0"
+              width={141}
+              height={141}
+              className="h-35.25 w-auto rounded-[20px] mx-auto md:h-49.25 md:mx-0"
             />
             <div className="flex flex-col gap-5 md:gap-7.5">
               <h2 className="text-black text-[24px] font-medium leading-[1.1] md:text-[32px] ">

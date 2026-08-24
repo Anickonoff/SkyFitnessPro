@@ -6,6 +6,7 @@ import { useRouter } from 'next/navigation';
 import { useAuth } from '@/hooks/useAuth';
 import { useAuthModal } from '@/hooks/useAuthModal';
 import { toast } from 'sonner';
+import Image from 'next/image';
 
 type HeaderPropsType = {
   privatePage?: boolean;
@@ -62,10 +63,12 @@ const Header = ({ privatePage = false }: HeaderPropsType) => {
   return (
     <header className="relative max-w-290 mt-10 mx-auto flex items-start justify-between px-4 md:px-6 lg:px-8 xl:px-0">
       <div className="flex gap-3.75 items-start flex-col">
-        <img
+        <Image
           src="/images/logo.svg"
           alt="Logo"
-          className="h-8.75 cursor-pointer"
+          width={223}
+          height={36}
+          className="h-8.75 cursor-pointer w-auto"
           onClick={handleLogoClick}
         />
         {!privatePage && (
@@ -80,9 +83,12 @@ const Header = ({ privatePage = false }: HeaderPropsType) => {
           className="flex flex-row items-center relative cursor-pointer"
           onClick={() => handleProfileClick()}
         >
-          <img
+          <Image
             src="/images/header-photo.png"
-            className="h-9 md:h-12.5 mr-2.5 md:mr-4"
+            alt="Аватар пользователя"
+            className="h-9 w-auto md:h-12.5 mr-2.5 md:mr-4"
+            height={50}
+            width={50}
           />
           <div className="hidden md:block text-2xl lining-nums proportional-nums leading-[1.1] mr-3">
             {user?.name}

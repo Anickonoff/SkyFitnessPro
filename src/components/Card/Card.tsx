@@ -10,6 +10,7 @@ import {
 } from '@/services/fitness/coursesApi';
 import { useAuth } from '@/hooks/useAuth';
 import { toast } from 'sonner';
+import Image from 'next/image';
 
 type BaseCardProps = {
   id: string;
@@ -101,9 +102,11 @@ const Card = (props: CardProps) => {
   const content = (
     <>
       {' '}
-      <img
+      <Image
         src={`/images/${courseCovers[order]}-card.png`}
         alt="Card Image"
+        width={360}
+        height={325}
         className="w-full h-auto rounded-[30px]"
       />
       <div className="px-5.25 md:px-7.5 flex flex-col gap-5">

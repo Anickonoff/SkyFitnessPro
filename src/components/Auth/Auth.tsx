@@ -139,7 +139,7 @@ const Auth = () => {
 
   return (
     <div className="max-w-90 w-full p-10 flex flex-col justify-start items-center gap-12 rounded-[30px] bg-white shadow-[0px_4px_67px_-12px_rgba(0,0,0,0.13)]">
-      <img src="/images/logo.png" alt="Logo" className="h-8.75" />
+      <img src="/images/logo.svg" alt="Logo" className="h-8.75" />
       <div className="flex flex-col gap-8.5 w-full">
         <div className="flex flex-col gap-2.5">
           <input
