@@ -5,6 +5,7 @@ import { User } from './AuthProvider';
 type AuthContextType = {
   user: User | null;
   isAuthenticated: boolean;
+  isLoading: boolean;
   login: (data: LoginProps) => Promise<void>;
   logout: () => void;
   token: string | null;

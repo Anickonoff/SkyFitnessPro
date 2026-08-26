@@ -119,7 +119,7 @@ const ProfileContent = ({ courses }: ProfileContentProps) => {
             {!addedCourses || addedCourses.length === 0 ? (
               <p>У Вас нет добавленных курсов</p>
             ) : (
-              addedCourses
+              [...addedCourses]
                 .sort((a, b) => a.order - b.order)
                 .map((course) => (
                   <Card
