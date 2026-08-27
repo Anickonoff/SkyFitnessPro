@@ -1,6 +1,6 @@
 'use client';
 
-import { ReactNode, useEffect, useState } from 'react';
+import { ReactNode, useCallback, useEffect, useState } from 'react';
 import { AuthContext } from './AuthContext';
 import { CourseProgress, LoginProps } from '@/types/authtypes';
 import authApi from '@/services/auth/authApi';
@@ -16,6 +16,7 @@ export type User = {
 const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
   const [token, setToken] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
   // useEffect(() => {
   //   const raw = localStorage.getItem('user');
   //   if (raw) {
@@ -30,9 +31,20 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
   // }, []);
   useEffect(() => {
     const raw = localStorage.getItem('token');
-    if (!raw) return;
+    if (!raw) {
+      setIsLoading(false);
+      return;
+    }
     setToken(raw);
-    refreshUserData();
+    (async () => {
+      try {
+        await refreshUserData();
+      } catch {
+        logout();
+      } finally {
+        setIsLoading(false);
+      }
+    })();
   }, []);
 
   const isAuthenticated = !!user;
@@ -80,10 +92,10 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
     }
   };
 
-  const logout = (): void => {
+  const logout = useCallback((): void => {
     updateUserData(null);
     updateToken(null);
-  };
+  }, []);
 
   useEffect(() => {
     setLogoutHandler(logout);
@@ -91,7 +103,15 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   return (
     <AuthContext.Provider
-      value={{ user, token, login, logout, isAuthenticated, refreshUserData }}
+      value={{
+        user,
+        token,
+        login,
+        logout,
+        isAuthenticated,
+        isLoading,
+        refreshUserData,
+      }}
     >
       {children}
     </AuthContext.Provider>

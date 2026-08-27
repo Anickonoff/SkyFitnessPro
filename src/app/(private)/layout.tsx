@@ -8,7 +8,18 @@ type AuthLayoutProps = {
 };
 
 const AuthLayout = ({ children }: AuthLayoutProps) => {
-  const { isAuthenticated } = useAuth();
+  const { isAuthenticated, isLoading } = useAuth();
+  if (isLoading) {
+    return (
+      <>
+        <Header privatePage={true} />
+        <div className="flex items-center justify-center h-[calc(100vh-100px)]">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-accent"></div>
+        </div>
+      </>
+    );
+  }
+
   if (!isAuthenticated) {
     return (
       <>

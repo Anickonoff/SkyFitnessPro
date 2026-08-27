@@ -39,7 +39,7 @@ export async function generateMetadata({
   }
 }
 
-const coursePage = async ({ params }: CoursePageProps) => {
+const CoursePage = async ({ params }: CoursePageProps) => {
   const { courseId } = await params;
 
   let course;
@@ -151,4 +151,4 @@ const coursePage = async ({ params }: CoursePageProps) => {
   );
 };
 
-export default coursePage;
+export default CoursePage;
