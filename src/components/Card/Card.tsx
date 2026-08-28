@@ -163,7 +163,7 @@ const Card = (props: CardProps) => {
               viewBox="0 0 18 18"
               fill="none"
             >
-              <g clipPath="url(#clip0_47_2965)">
+              <g clipPath={`url(#clip0_47_2965-${id})`}>
                 <path
                   fillRule="evenodd"
                   clipRule="evenodd"
@@ -196,7 +196,7 @@ const Card = (props: CardProps) => {
                 />
               </g>
               <defs>
-                <clipPath id="clip0_47_2965">
+                <clipPath id={`clip0_47_2965-${id}`}>
                   <rect width="18" height="18" fill="white" />
                 </clipPath>
               </defs>
@@ -209,46 +209,37 @@ const Card = (props: CardProps) => {
     </>
   );
 
+  const cardButton = (
+    <button
+      onClick={handleClickCourseButton}
+      aria-label={tooltipText}
+      disabled={courseActionState === 'unauthorized'}
+      className="absolute top-5 right-5 z-20 cursor-pointer disabled:cursor-not-allowed after:hidden  md:after:block after:absolute after:left-full after:top-full after:mt-2 after:ml-3 after:content-[attr(aria-label)] after:rounded-[5px] after:bg-white after:border after:p-1.5 after:text-sm after:leading-[1.1] after:text-text-secondary  after:whitespace-nowrap after:opacity-0 hover:after:opacity-100"
+    >
+      <img
+        src={
+          courseActionState === 'added'
+            ? '/images/remove.svg'
+            : '/images/add.svg'
+        }
+      />
+    </button>
+  );
+
   return props.variant === 'profile' ? (
-    <article className="relative w-full max-w-85.75 md:max-w-90 bg-white rounded-[30px] shadow-[0_4px_67px_-12px_rgba(0,0,0,0.13)]">
+    <article className="relative w-full max-w-85.75 md:max-w-90 bg-white rounded-[30px] shadow-card">
       <div className="w-full flex flex-col gap-6 pb-3.75 ">{content}</div>
-      <button
-        onClick={handleClickCourseButton}
-        aria-label={tooltipText}
-        disabled={courseActionState === 'unauthorized'}
-        className="absolute top-5 right-5 z-20 cursor-pointer disabled:cursor-not-allowed after:hidden  md:after:block after:absolute after:left-full after:top-full after:mt-2 after:ml-3 after:content-[attr(aria-label)] after:rounded-[5px] after:bg-white after:border after:p-1.5 after:text-sm after:leading-[1.1] after:text-text-secondary  after:whitespace-nowrap after:opacity-0 hover:after:opacity-100"
-      >
-        <img
-          src={
-            courseActionState === 'added'
-              ? '/images/remove.svg'
-              : '/images/add.svg'
-          }
-        />
-      </button>
+      {cardButton}
     </article>
   ) : (
-    <article className="relative w-full max-w-85.75 md:max-w-90 bg-white rounded-[30px] shadow-[0_4px_67px_-12px_rgba(0,0,0,0.13)]">
+    <article className="relative w-full max-w-85.75 md:max-w-90 bg-white rounded-[30px] shadow-card">
       <Link
         href={`/courses/${id}`}
         className="w-full flex flex-col gap-6 pb-3.75 "
       >
         {content}
       </Link>
-      <button
-        onClick={handleClickCourseButton}
-        aria-label={tooltipText}
-        disabled={courseActionState === 'unauthorized'}
-        className="absolute top-5 right-5 z-20 cursor-pointer disabled:cursor-not-allowed after:hidden  md:after:block after:absolute after:left-full after:top-full after:mt-2 after:ml-3 after:content-[attr(aria-label)] after:rounded-[5px] after:bg-white after:border after:p-1.5 after:text-sm after:leading-[1.1] after:text-text-secondary  after:whitespace-nowrap after:opacity-0 hover:after:opacity-100"
-      >
-        <img
-          src={
-            courseActionState === 'added'
-              ? '/images/remove.svg'
-              : '/images/add.svg'
-          }
-        />
-      </button>
+      {cardButton}
     </article>
   );
 };

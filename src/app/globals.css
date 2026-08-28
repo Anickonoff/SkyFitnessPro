@@ -19,6 +19,8 @@
   --color-text-inactive: #999999;
   --color-progress-bar: #00c1ff;
   --color-progress-bg: #f7f7f7;
+
+  --shadow-card: 0 4px 67px -12px rgba(0, 0, 0, 0.13);
 }
 
 * {

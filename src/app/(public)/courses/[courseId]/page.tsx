@@ -117,7 +117,7 @@ const CoursePage = async ({ params }: CoursePageProps) => {
           />
         </div>
         <div className="px-4 md:px-6 lg:px-8">
-          <div className="p-7.5 md:p-10 -mt-20 md:mt-0 bg-white rounded-[30px] shadow-[0_4px_67px_-12px_rgba(0,0,0,0.13)] max-w-290 mx-auto md:min-h-121.5 relative overflow-hidden md:overflow-visible">
+          <div className="p-7.5 md:p-10 -mt-20 md:mt-0 bg-white rounded-[30px] shadow-card max-w-290 mx-auto md:min-h-121.5 relative overflow-hidden md:overflow-visible">
             <div className="flex flex-col gap-7 w-full max-w-125 md:w-109.25 relative z-30">
               <h2 className="text-[32px] font-medium leading-[1.1] text-black md:text-6xl">
                 Начните путь к&nbsp;новому телу

@@ -115,7 +115,7 @@ const Header = ({ privatePage = false }: HeaderPropsType) => {
       {isUserPopUpShown && (
         <div
           ref={userPopUpRef}
-          className="absolute right-0 top-full z-20 p-7.5 flex flex-col items-center gap-8.5 rounded-[30px] bg-white shadow-[0_4px_67px_-12px_rgba(0,0,0,0.13)]"
+          className="absolute right-0 top-full z-20 p-7.5 flex flex-col items-center gap-8.5 rounded-[30px] bg-white shadow-card"
         >
           <div className="flex flex-col items-center gap-2.5 text-lg leading-[1.1]">
             <p className="text-black">{user?.name}</p>

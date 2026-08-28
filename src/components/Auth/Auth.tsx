@@ -17,7 +17,7 @@ const Auth = () => {
     password2: false,
   });
 
-  const hanldeChangeAuthMode = () => {
+  const handleChangeAuthMode = () => {
     setAuthMode((prev) => (prev === 'login' ? 'register' : 'login'));
   };
 
@@ -183,7 +183,7 @@ const Auth = () => {
           <Button onClick={() => handleSubmit()} disabled={hasErrors}>
             {authMode === 'login' ? 'Войти' : 'Зарегистрироваться'}
           </Button>
-          <Button onClick={hanldeChangeAuthMode} variant="secondary">
+          <Button onClick={handleChangeAuthMode} variant="secondary">
             {authMode === 'login' ? 'Зарегистрироваться' : 'Войти'}
           </Button>
         </div>
