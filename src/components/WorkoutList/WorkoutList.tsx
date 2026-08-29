@@ -82,7 +82,7 @@ const WorkoutList = ({ courseId, workoutIds }: WorkoutListProps) => {
   };
 
   return (
-    <div className="w-full max-w-115 p-7.5 flex flex-col gap-8.5 md:p-10 md:gap-12 rounded-[30px] items-start shadow=[0_4px_67px_-12px_rgba(0,0,0,0.13] bg-white">
+    <div className="w-full max-w-115 p-7.5 flex flex-col gap-8.5 md:p-10 md:gap-12 rounded-[30px] items-start shadow-card bg-white">
       <h1 className=" text-[32px] leading-[1.1] text-black md:text-center min-w-0 w-full">
         Выберите тренировку
       </h1>

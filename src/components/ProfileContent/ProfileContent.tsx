@@ -91,7 +91,7 @@ const ProfileContent = ({ courses }: ProfileContentProps) => {
           <h2 className="text-black text-[24px] font-semibold leading-[1.1] lg:text-[40px] lg:leading-none">
             Профиль
           </h2>
-          <div className="p-7.5 rounded-[30px] bg-white shadow-[0_4px_67px_-12px_rgba(0,0,0,0.13)] flex flex-col gap-7.5 w-full md:flex-row md:gap-8.25">
+          <div className="p-7.5 rounded-[30px] bg-white shadow-card flex flex-col gap-7.5 w-full md:flex-row md:gap-8.25">
             <Image
               src="/images/profile-photo.png"
               alt="Profile Photo"

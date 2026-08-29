@@ -134,7 +134,7 @@ const ExerciseModal = ({
 
   if (modalMode === 'form') {
     return (
-      <div className="w-full max-w-106.5 p-7.5 flex flex-col gap-8.5 md:p-10 md:gap-12 rounded-[30px] items-start shadow=[0_4px_67px_-12px_rgba(0,0,0,0.13] bg-white">
+      <div className="w-full max-w-106.5 p-7.5 flex flex-col gap-8.5 md:p-10 md:gap-12 rounded-[30px] items-start shadow-card bg-white">
         <h1 className=" text-[32px] leading-[1.1] text-black min-w-0 w-full">
           Мой прогресс
         </h1>
@@ -172,7 +172,7 @@ const ExerciseModal = ({
     );
   } else {
     return (
-      <div className="w-full max-w-106.5 p-10 flex flex-col gap-8.5 md:p-10 md:gap-12 rounded-[30px] items-start shadow=[0_4px_67px_-12px_rgba(0,0,0,0.13] bg-white">
+      <div className="w-full max-w-106.5 p-10 flex flex-col gap-8.5 md:p-10 md:gap-12 rounded-[30px] items-start shadow-card bg-white">
         <h1 className="w-full text-center text-[32px] leading-[1.1] md:font-semibold md:text-[40px]">
           Ваш прогресс засчитан
         </h1>
