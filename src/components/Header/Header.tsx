@@ -7,6 +7,7 @@ import { useAuth } from '@/hooks/useAuth';
 import { useAuthModal } from '@/hooks/useAuthModal';
 import { toast } from 'sonner';
 import Image from 'next/image';
+import Link from 'next/link';
 
 type HeaderPropsType = {
   privatePage?: boolean;
@@ -15,7 +16,7 @@ type HeaderPropsType = {
 const Header = ({ privatePage = false }: HeaderPropsType) => {
   const { isAuthenticated, logout, user } = useAuth();
   const [isUserPopUpShown, setIsUserPopUpShown] = useState<boolean>(false);
-  const profileButtonRef = useRef<HTMLDivElement>(null);
+  const profileButtonRef = useRef<HTMLButtonElement>(null);
   const userPopUpRef = useRef<HTMLDivElement>(null);
   const { openAuthModal } = useAuthModal();
 
@@ -23,10 +24,6 @@ const Header = ({ privatePage = false }: HeaderPropsType) => {
 
   const handleProfileClick = () => {
     setIsUserPopUpShown((prev) => !prev);
-  };
-
-  const handleLogoClick = () => {
-    router.push('/');
   };
 
   const handleLogout = () => {
@@ -63,14 +60,15 @@ const Header = ({ privatePage = false }: HeaderPropsType) => {
   return (
     <header className="relative max-w-290 mt-10 mx-auto flex items-start justify-between px-4 md:px-6 lg:px-8 xl:px-0">
       <div className="flex gap-3.75 items-start flex-col">
-        <Image
-          src="/images/logo.svg"
-          alt="Logo"
-          width={223}
-          height={36}
-          className="h-8.75 cursor-pointer w-auto"
-          onClick={handleLogoClick}
-        />
+        <Link href="/">
+          <Image
+            src="/images/logo.svg"
+            alt="Logo"
+            width={223}
+            height={36}
+            className="h-8.75 cursor-pointer w-auto"
+          />
+        </Link>
         {!privatePage && (
           <p className="hidden md:block text-black text-lg font-normal leading-[1.1] opacity-50">
             Онлайн-тренировки для занятий дома
@@ -78,10 +76,14 @@ const Header = ({ privatePage = false }: HeaderPropsType) => {
         )}
       </div>
       {isAuthenticated ? (
-        <div
+        <button
           ref={profileButtonRef}
           className="flex flex-row items-center relative cursor-pointer"
-          onClick={() => handleProfileClick()}
+          onClick={handleProfileClick}
+          type="button"
+          aria-haspopup="true"
+          aria-expanded={isUserPopUpShown}
+          aria-label="Меню профиля"
         >
           <Image
             src="/images/header-photo.png"
@@ -90,9 +92,9 @@ const Header = ({ privatePage = false }: HeaderPropsType) => {
             height={50}
             width={50}
           />
-          <div className="hidden md:block text-2xl lining-nums proportional-nums leading-[1.1] mr-3">
+          <span className="hidden md:block text-2xl lining-nums proportional-nums leading-[1.1] mr-3">
             {user?.name}
-          </div>
+          </span>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="10"
@@ -106,7 +108,7 @@ const Header = ({ privatePage = false }: HeaderPropsType) => {
               strokeWidth="2"
             />
           </svg>
-        </div>
+        </button>
       ) : (
         <Button onClick={openAuthModal} size="small">
           Войти
