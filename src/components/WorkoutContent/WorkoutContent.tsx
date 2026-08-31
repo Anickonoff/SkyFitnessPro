@@ -120,6 +120,7 @@ const WorkoutContent = ({ courseId, workoutId }: WorkoutContentProps) => {
         className="w-full aspect-video rounded-[9px] md:rounded-[30px]"
         allowFullScreen
         src={workout.video}
+        title={`Видео тренировки ${parseWorkoutName(workout.name).title}`}
       />
       <div className="flex flex-col gap-10 w-full p-7.5 rounded-[30px] shadow-card self-stretch sm:self-start lg:p-10 ">
         <div className="flex flex-col gap-5">

@@ -222,6 +222,8 @@ const Card = (props: CardProps) => {
             ? '/images/remove.svg'
             : '/images/add.svg'
         }
+        alt=""
+        aria-hidden="true"
       />
     </button>
   );

@@ -106,6 +106,11 @@ const WorkoutList = ({ courseId, workoutIds }: WorkoutListProps) => {
                             ? '/images/check-in-circle.svg'
                             : '/images/check-out-circle.svg'
                         }
+                        alt={
+                          completedWorkoutIds.has(workout._id)
+                            ? 'Тренировка пройдена'
+                            : 'Тренировка не пройдена'
+                        }
                       />
                       <div className="flex flex-col gap-2.5 justify-center items-start ">
                         <p className="text-lg leading-[1.1] md:text-2xl ">
