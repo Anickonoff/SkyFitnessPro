@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import Button from '../Button/Button';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/hooks/useAuth';
@@ -8,6 +8,7 @@ import { useAuthModal } from '@/hooks/useAuthModal';
 import { toast } from 'sonner';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useClickOutside } from '@/hooks/useClickOutside';
 
 type HeaderPropsType = {
   privatePage?: boolean;
@@ -32,30 +33,9 @@ const Header = ({ privatePage = false }: HeaderPropsType) => {
     toast.info('Вы вышли из учётной записи!', { id: 'auth-logout' });
   };
 
-  useEffect(() => {
-    if (!isUserPopUpShown) {
-      return;
-    }
-
-    const handleClickOutside = (event: MouseEvent) => {
-      const target = event.target as Node;
-
-      if (
-        profileButtonRef.current?.contains(target) ||
-        userPopUpRef.current?.contains(target)
-      ) {
-        return;
-      }
-
-      setIsUserPopUpShown(false);
-    };
-
-    document.addEventListener('click', handleClickOutside);
-
-    return () => {
-      document.removeEventListener('click', handleClickOutside);
-    };
-  }, [isUserPopUpShown]);
+  useClickOutside([profileButtonRef, userPopUpRef], () => {
+    setIsUserPopUpShown(false);
+  });
 
   return (
     <header className="relative max-w-290 mt-10 mx-auto flex items-start justify-between px-4 md:px-6 lg:px-8 xl:px-0">
