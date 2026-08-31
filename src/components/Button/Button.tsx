@@ -1,21 +1,17 @@
-type ButtonProps = {
+interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   children: React.ReactNode;
-  onClick?: () => void | Promise<void>;
   variant?: 'primary' | 'secondary';
   size?: 'default' | 'small';
   className?: string;
-  disabled?: boolean;
-  type?: 'button' | 'submit';
-};
+}
 
 const Button = ({
-  children,
-  onClick,
   variant = 'primary',
   size = 'default',
   className,
-  disabled = false,
   type = 'button',
+  children,
+  ...props
 }: ButtonProps) => {
   const baseClasses =
     'block rounded-full text-lg text-black leading-[1.1] cursor-pointer';
@@ -32,9 +28,8 @@ const Button = ({
   return (
     <button
       className={`${baseClasses} ${sizes[size]} ${variants[variant]} ${className || ''}`}
-      onClick={onClick}
       type={type}
-      disabled={disabled}
+      {...props}
     >
       {children}
     </button>

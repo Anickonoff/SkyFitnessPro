@@ -108,7 +108,10 @@ const WorkoutContent = ({ courseId, workoutId }: WorkoutContentProps) => {
   return (
     <>
       {shownProgressForm && (
-        <ModalWrapper onClick={handleOverlayClick}>
+        <ModalWrapper
+          onClick={handleOverlayClick}
+          onClose={() => setShownProgressForm(false)}
+        >
           <ExerciseModal
             courseId={courseId}
             workoutId={workoutId}

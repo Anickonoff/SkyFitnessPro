@@ -79,7 +79,10 @@ const ProfileContent = ({ courses }: ProfileContentProps) => {
   return (
     <>
       {shownWorkouts && (
-        <ModalWrapper onClick={handleOverlayClick}>
+        <ModalWrapper
+          onClick={handleOverlayClick}
+          onClose={() => setShownWorkouts(null)}
+        >
           <WorkoutList
             courseId={shownWorkouts}
             workoutIds={selectedCourse?.workouts}

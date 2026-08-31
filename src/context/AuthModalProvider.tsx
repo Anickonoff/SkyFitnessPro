@@ -23,7 +23,10 @@ const AuthModalProvider = ({ children }: { children: ReactNode }) => {
     <AuthModalContext.Provider value={{ openAuthModal, closeAuthModal }}>
       {children}
       {isAuthShown && (
-        <ModalWrapper onClick={handleOverlayClick}>
+        <ModalWrapper
+          onClick={handleOverlayClick}
+          onClose={() => closeAuthModal()}
+        >
           <Auth />
         </ModalWrapper>
       )}
