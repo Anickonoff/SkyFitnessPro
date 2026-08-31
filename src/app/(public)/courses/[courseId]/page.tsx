@@ -55,7 +55,7 @@ const CoursePage = async ({ params }: CoursePageProps) => {
         <div
           className={`relative w-full h-97.25 md:h-77.5 rounded-[30px] md:p-10 ${courseBgs[course.order]} bg-no-repeat md:bg-right overflow-hidden`}
         >
-          <h1 className="text-white text-6xl font-medium leading-[1.1] hidden md:block">
+          <h1 className="text-white text-6xl font-medium leading-[1.1] sr-only md:not-sr-only">
             {course.nameRU}
           </h1>
           <Image

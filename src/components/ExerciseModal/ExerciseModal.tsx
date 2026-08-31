@@ -135,9 +135,9 @@ const ExerciseModal = ({
   if (modalMode === 'form') {
     return (
       <div className="w-full max-w-106.5 p-7.5 flex flex-col gap-8.5 md:p-10 md:gap-12 rounded-[30px] items-start shadow-card bg-white">
-        <h1 className=" text-[32px] leading-[1.1] text-black min-w-0 w-full">
+        <h2 className=" text-[32px] leading-[1.1] text-black min-w-0 w-full">
           Мой прогресс
-        </h1>
+        </h2>
         <div className="flex flex-col gap-8.5 items-center  min-w-0 w-full">
           <div className="pr-5 flex flex-col gap-5 max-h-84.25 md:max-h-86.5 w-full overflow-auto scrollbar-thumb-black scrollbar-thin scrollbar-gutter-stable">
             {exercises.map((exercise) => (
@@ -173,9 +173,9 @@ const ExerciseModal = ({
   } else {
     return (
       <div className="w-full max-w-106.5 p-10 flex flex-col gap-8.5 md:p-10 md:gap-12 rounded-[30px] items-start shadow-card bg-white">
-        <h1 className="w-full text-center text-[32px] leading-[1.1] md:font-semibold md:text-[40px]">
+        <h2 className="w-full text-center text-[32px] leading-[1.1] md:font-semibold md:text-[40px]">
           Ваш прогресс засчитан
-        </h1>
+        </h2>
         <Image
           className="self-center"
           alt=""
