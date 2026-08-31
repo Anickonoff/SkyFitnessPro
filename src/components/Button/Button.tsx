@@ -5,6 +5,7 @@ type ButtonProps = {
   size?: 'default' | 'small';
   className?: string;
   disabled?: boolean;
+  type?: 'button' | 'submit';
 };
 
 const Button = ({
@@ -14,6 +15,7 @@ const Button = ({
   size = 'default',
   className,
   disabled = false,
+  type = 'button',
 }: ButtonProps) => {
   const baseClasses =
     'block rounded-full text-lg text-black leading-[1.1] cursor-pointer';
@@ -31,7 +33,7 @@ const Button = ({
     <button
       className={`${baseClasses} ${sizes[size]} ${variants[variant]} ${className || ''}`}
       onClick={onClick}
-      type="button"
+      type={type}
       disabled={disabled}
     >
       {children}

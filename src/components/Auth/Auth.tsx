@@ -1,4 +1,4 @@
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent, FormEvent, useState } from 'react';
 import Button from '../Button/Button';
 import { useAuth } from '@/hooks/useAuth';
 import authApi from '@/services/auth/authApi';
@@ -110,7 +110,8 @@ const Auth = () => {
     });
   };
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (e: React.SubmitEvent<HTMLFormElement>) => {
+    e.preventDefault();
     if (!validateForm()) return;
     try {
       if (authMode === 'login') {
@@ -140,7 +141,7 @@ const Auth = () => {
   return (
     <div className="max-w-90 w-full p-10 flex flex-col justify-start items-center gap-12 rounded-[30px] bg-white shadow-[0px_4px_67px_-12px_rgba(0,0,0,0.13)]">
       <img src="/images/logo.svg" alt="Logo" className="h-8.75" />
-      <div className="flex flex-col gap-8.5 w-full">
+      <form className="flex flex-col gap-8.5 w-full" onSubmit={handleSubmit}>
         <div className="flex flex-col gap-2.5">
           <input
             type="text"
@@ -180,14 +181,18 @@ const Auth = () => {
           )}
         </div>
         <div className="flex flex-col gap-2.5">
-          <Button onClick={() => handleSubmit()} disabled={hasErrors}>
+          <Button type="submit" disabled={hasErrors}>
             {authMode === 'login' ? 'Войти' : 'Зарегистрироваться'}
           </Button>
-          <Button onClick={handleChangeAuthMode} variant="secondary">
+          <Button
+            onClick={handleChangeAuthMode}
+            variant="secondary"
+            type="button"
+          >
             {authMode === 'login' ? 'Зарегистрироваться' : 'Войти'}
           </Button>
         </div>
-      </div>
+      </form>
     </div>
   );
 };
